@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#FFFFFF;}
+body{font-family:'Montserrat',sans-serif;color:#6E6E77;-webkit-font-smoothing:antialiased;}
+*{box-sizing:border-box;}
+a{color:#496A83;}
+a:hover{color:#2F4A5E;}
+@keyframes imbspin{to{transform:rotate(360deg);}}
+</style>
+</helmet>
+<div style="font-family:'Montserrat',sans-serif;color:#6E6E77;min-height:100vh;display:flex;flex-direction:column;background:#FFFFFF;">
+
+<!-- HEADER -->
+<header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.97);border-bottom:1px solid #E4E9ED;">
+  <div style="max-width:1240px;margin:0 auto;padding:14px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:24px;">
+    <a href="#home" aria-label="Imbue Healthcare — Home" style="display:flex;align-items:center;flex-shrink:0;">
+      <img src="assets/imbue-logo.png" alt="Imbue Healthcare" style="height:72px;width:auto;display:block;">
+    </a>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Main" style="display:flex;align-items:center;gap:32px;">
+        <div style="display:flex;align-items:center;gap:28px;">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+            <a href="{{ n.href }}" style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-decoration:none;color:{{ n.color }};background:{{ n.bg }};padding:{{ n.pad }};border-radius:{{ n.radius }};border-bottom:2px solid {{ n.line }};outline:none;" style-hover="opacity:0.85;" style-focus="outline:none;">{{ n.label }}</a>
+          </sc-for>
+        </div>
+        
+      </nav>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:10px;">
+        
+        <button onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="width:48px;height:48px;border:1px solid #D5DDE3;background:#FFFFFF;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">
+          <span style="display:block;width:20px;height:2px;background:#496A83;"></span>
+          <span style="display:block;width:20px;height:2px;background:#496A83;"></span>
+          <span style="display:block;width:20px;height:2px;background:#496A83;"></span>
+        </button>
+      </div>
+    </sc-if>
+  </div>
+  <sc-if value="{{ showMobileMenu }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="Mobile" style="border-top:1px solid #E4E9ED;background:#FFFFFF;padding:8px clamp(20px,4vw,48px) 20px;display:flex;flex-direction:column;">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+        <a href="{{ n.href }}" onClick="{{ closeMenu }}" style="font-size:15px;font-weight:600;letter-spacing:0.06em;text-decoration:none;color:{{ n.color }};padding:16px 0;border-bottom:1px solid #EEF1F4;">{{ n.label }}</a>
+      </sc-for>
+    </nav>
+  </sc-if>
+</header>
+
+<main style="flex:1;">
+
+<!-- ============ HOME ============ -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="Home" style="background:#496A83;color:#FFFFFF;overflow:hidden;min-height:calc(100vh - 101px);display:flex;align-items:center;">
+    <div style="width:100%;max-width:1240px;margin:0 auto;padding:clamp(44px,5.5vw,72px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(32px,4vw,56px);align-items:center;">
+      <div style="display:flex;flex-direction:column;gap:30px;">
+        <div style="display:flex;align-items:center;gap:12px;font-size:12px;font-weight:700;letter-spacing:0.22em;color:#D9E6CF;margin-bottom:24px;">
+          <span style="width:28px;height:2px;background:#82AA69;display:block;"></span>SOUTH AFRICAN HEALTHCARE SOLUTIONS
+        </div>
+        <h1 style="margin: 0; font-size: clamp(24px,2.6vw,32px); line-height: 1.25; font-weight: 700; letter-spacing: -0.01em; color: #FFFFFF; text-wrap: balance; max-width: 502px">Connecting healthcare solutions with the people who need them.</h1>
+        <p style="margin:0;font-size:clamp(16px,1.4vw,18px);line-height:1.7;font-weight:400;color:#E6EDF2;max-width:560px;text-wrap:pretty;">Imbue sources, registers and distributes medicines and diagnostic equipment in South Africa, while providing specialist commercial services to the pharmaceutical and medical-device sectors.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;padding-top:6px;">
+          <a href="#products" style="font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;background:#82AA69;color:#1C2B14;padding:16px 28px;border-radius:999px;" style-hover="background:#94BA7C;color:#1C2B14;" style-focus="outline:3px solid #FFFFFF;outline-offset:3px;">Explore Our Products</a>
+          <a href="#services" style="font-size:14px;font-weight:600;letter-spacing:0.04em;text-decoration:none;border:1.5px solid rgba(255,255,255,0.7);color:#FFFFFF;padding:15px 28px;border-radius:999px;" style-hover="background:rgba(255,255,255,0.1);color:#FFFFFF;" style-focus="outline:3px solid #82AA69;outline-offset:3px;">Our Services</a>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <div style="border-radius:20px;overflow:hidden;width:100%;max-width:clamp(360px,40vw,540px);aspect-ratio:849/737;margin-left:auto;background:#3E5C72;">
+          <img src="assets/doctor-hero.jpg" alt="Healthcare professional wearing an Imbue Healthcare coat, holding a vial" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,80px);align-items:center;">
+    <div style="border-radius:20px;overflow:hidden;aspect-ratio:16/10;">
+      <img src="assets/team.jpg" alt="Pharmaceutical team reviewing products and data" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">ABOUT US</div>
+      <h2 style="margin:0;font-size:clamp(24px,2.6vw,32px);line-height:1.25;font-weight:700;color:#2F4A5E;">A South African pharmaceutical<br>and medical-device company.</h2>
+      <p style="margin:0;font-size:17px;line-height:1.75;text-wrap:pretty;">We work to fill gaps in the South African healthcare system, bringing medicines and diagnostic equipment to the people who need them, and supporting healthcare businesses with specialist commercial expertise.</p>
+      <a href="#about" style="font-size:15px;font-weight:700;color:#496A83;text-decoration:none;display:flex;gap:8px;align-items:center;" style-hover="color:#2F4A5E;text-decoration:underline;">Learn More About Us →</a>
+    </div>
+  </section>
+
+  <section style="background:#F3F6F8;">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,4vw,48px) clamp(32px,4vw,48px);display:flex;flex-direction:column;gap:28px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">FEATURED PRODUCT</div>
+        <h2 style="margin:0;font-size:clamp(24px,2.6vw,32px);line-height:1.25;font-weight:700;color:#2F4A5E;">Lung Screening Spirometer</h2>
+      </div>
+      <div style="background:#FFFFFF;border-radius:24px;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));align-items:center;">
+        <div style="padding:clamp(24px,4vw,48px);display:flex;align-items:center;justify-content:center;">
+          <img src="assets/spirometer-device.png" alt="Lung Screening Spirometer handset" style="width:100%;max-width:520px;height:auto;display:block;">
+        </div>
+        <div style="padding:clamp(28px,4vw,56px);display:flex;flex-direction:column;gap:22px;">
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:#496A83;background:#E8EEF2;padding:7px 12px;border-radius:999px;">COST EFFECTIVE</span>
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:#496A83;background:#E8EEF2;padding:7px 12px;border-radius:999px;">EASY TO USE</span>
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:#496A83;background:#E8EEF2;padding:7px 12px;border-radius:999px;">PORTABLE</span>
+          </div>
+          <p style="margin:0;font-size:17px;line-height:1.75;text-wrap:pretty;">A USB-powered handset and software for measuring lung function, with Flow-Volume and Volume-Time graphs, trend tracking and customisable print options. Available to healthcare professionals.</p>
+          <a href="#products/spirometer" style="font-size:15px;font-weight:700;color:#496A83;text-decoration:none;" style-hover="color:#2F4A5E;text-decoration:underline;">View Spirometer →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(32px,4vw,48px) clamp(20px,4vw,48px) clamp(16px,2vw,24px);display:flex;flex-direction:column;gap:28px;">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:820px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">SERVICES</div>
+        <h2 style="margin:0;font-size:clamp(24px,2.6vw,32px);line-height:1.25;font-weight:700;color:#2F4A5E;text-wrap:balance;">Specialist commercial support for pharmaceutical and medical-device businesses.</h2>
+      </div>
+      <a href="#services" style="font-size:15px;font-weight:700;color:#496A83;text-decoration:none;" style-hover="color:#2F4A5E;text-decoration:underline;">Explore Our Services →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px;">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="4">
+        <a href="#services" style="text-decoration:none;border:1px solid #E1E7EC;border-radius:18px;padding:24px 22px;display:flex;flex-direction:column;gap:14px;background:#FFFFFF;" style-hover="border-color:#496A83;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">
+          <div style="width:52px;height:52px;border-radius:14px;background:#EEF4EA;display:flex;align-items:center;justify-content:center;">{{ s.icon }}</div>
+          <div style="font-size:14px;font-weight:700;letter-spacing:0.14em;color:#2F4A5E;">{{ s.title }}</div>
+          <div style="font-size:15px;line-height:1.65;color:#6E6E77;">{{ s.short }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<!-- ============ ABOUT ============ -->
+<sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="About" style="background:#F3F6F8;">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) clamp(28px,3.5vw,44px);display:flex;flex-direction:column;gap:18px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">ABOUT US</div>
+      <h1 style="margin:0;font-size:clamp(34px,4.4vw,54px);line-height:1.1;font-weight:700;color:#2F4A5E;">About Imbue Healthcare</h1>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(32px,4vw,52px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(36px,5vw,80px);align-items:center;">
+    <div style="display:flex;flex-direction:column;gap:26px;">
+      <h2 style="margin:0;font-size:clamp(24px,2.6vw,32px);line-height:1.25;font-weight:700;color:#2F4A5E;text-wrap:balance;">Who we are</h2>
+      <p style="margin:0;font-size:17px;line-height:1.8;font-weight:400;text-wrap:pretty;">Imbue Healthcare is a <strong style="font-weight:700;color:#2F4A5E;">South African pharmaceutical and medical device company</strong>. We <strong style="font-weight:700;color:#2F4A5E;">source, register and distribute medicines and diagnostic equipment</strong> to the people who need them most, filling the gaps in the South African healthcare system, where patients too often can't reach the treatments that could change, or save, their lives.</p>
+      <p style="margin:0;font-size:17px;line-height:1.8;font-weight:400;text-wrap:pretty;">Alongside sourcing, registration and distribution, Imbue Healthcare provides <strong style="font-weight:700;color:#2F4A5E;">specialist commercial support</strong> to businesses operating within the pharmaceutical and medical-device sectors. Our capabilities span <strong style="font-weight:700;color:#2F4A5E;">marketing, sales, patient support and strategy</strong>, allowing us to work with healthcare partners across different stages of a product's journey. We combine healthcare industry knowledge with practical commercial support, helping connect products, healthcare professionals and patients more effectively.</p>
+    </div>
+    <div style="border-radius:20px;overflow:hidden;background:#2F4A5E;aspect-ratio:4/5;width:100%;max-width:440px;justify-self:end;align-self:stretch;height:100%;min-height:0;">
+      <video src="assets/imbue-loop-4x5.mp4" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" aria-label="Imbue Healthcare brand animation" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+    </div>
+  </section>
+  <section style="background:#496A83;">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,72px);align-items:center;">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <h2 style="margin:0;font-size:clamp(22px,2.4vw,30px);line-height:1.25;font-weight:700;color:#FFFFFF;">More than a product distributor:</h2>
+        <p style="margin:0;font-size:clamp(18px,1.8vw,22px);line-height:1.45;font-weight:400;color:#E6EDF2;">a commercial and strategic healthcare partner.</p>
+      </div>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,0.22);">
+        <li style="display:flex;align-items:center;gap:18px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.22);"><span style="width:36px;height:36px;border-radius:50%;background:#82AA69;color:#1C2B14;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">01</span><span style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.16em;color:#D9E6CF;">SOURCE</span><span style="font-size:16px;color:#FFFFFF;">Medicines and diagnostic equipment</span></span></li>
+        <li style="display:flex;align-items:center;gap:18px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.22);"><span style="width:36px;height:36px;border-radius:50%;background:#82AA69;color:#1C2B14;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">02</span><span style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.16em;color:#D9E6CF;">REGISTER</span><span style="font-size:16px;color:#FFFFFF;">For the South African market</span></span></li>
+        <li style="display:flex;align-items:center;gap:18px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.22);"><span style="width:36px;height:36px;border-radius:50%;background:#82AA69;color:#1C2B14;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">03</span><span style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.16em;color:#D9E6CF;">DISTRIBUTE</span><span style="font-size:16px;color:#FFFFFF;">To the people who need them</span></span></li>
+        <li style="display:flex;align-items:center;gap:18px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.22);"><span style="width:36px;height:36px;border-radius:50%;background:#82AA69;color:#1C2B14;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">04</span><span style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.16em;color:#D9E6CF;">SUPPORT</span><span style="font-size:16px;color:#FFFFFF;">Marketing, sales, patient support and strategy</span></span></li>
+      </ul>
+    </div>
+  </section>
+</sc-if>
+
+<!-- ============ PRODUCTS LISTING ============ -->
+<sc-if value="{{ isProducts }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Products" style="background:#F3F6F8;">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) clamp(28px,3.5vw,44px);display:flex;flex-direction:column;gap:18px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">PRODUCTS</div>
+      <h1 style="margin:0;font-size:clamp(34px,4.4vw,54px);line-height:1.1;font-weight:700;color:#2F4A5E;">Our Products</h1>
+      <p style="margin:0;font-size:17px;line-height:1.75;color:#6E6E77;max-width:none;">Medicines, medical devices and diagnostics sourced and registered for South Africa. Products are available to healthcare professionals; contact us to enquire or order.</p>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(28px,3.5vw,44px) clamp(20px,4vw,48px) clamp(40px,5vw,64px);display:flex;flex-direction:column;gap:28px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:24px;">
+      <sc-for list="{{ visibleProducts }}" as="p" hint-placeholder-count="1">
+        <a href="{{ p.href }}" style="text-decoration:none;border:1px solid #E1E7EC;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;background:#FFFFFF;" style-hover="border-color:#496A83;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">
+          <div style="aspect-ratio:4/3;background:#FFFFFF;display:flex;align-items:center;justify-content:center;padding:24px;border-bottom:1px solid #EEF1F4;">
+            <img src="{{ p.img }}" alt="{{ p.name }}" style="max-width:100%;max-height:100%;object-fit:contain;display:block;">
+          </div>
+          <div style="padding:24px 26px 28px;display:flex;flex-direction:column;gap:12px;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.16em;color:#4F7A3A;">{{ p.category }}</span>
+            <span style="font-size:20px;font-weight:700;color:#2F4A5E;">{{ p.name }}</span>
+            <span style="font-size:15px;line-height:1.6;color:#6E6E77;">{{ p.summary }}</span>
+            <span style="font-size:14px;font-weight:700;color:#496A83;padding-top:6px;">View product →</span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+    <sc-if value="{{ noProducts }}" hint-placeholder-val="{{ false }}">
+      <div style="border:1px dashed #C9D3DB;border-radius:20px;padding:48px 28px;text-align:center;font-size:15px;line-height:1.6;">No products in this category yet. <a href="#contact" style="color:#496A83;font-weight:600;">Contact us</a> about what you're looking for.</div>
+    </sc-if>
+  </section>
+</sc-if>
+
+<!-- ============ SPIROMETER ============ -->
+<sc-if value="{{ isSpiro }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Spirometer" style="max-width:1240px;margin:0 auto;padding:24px clamp(20px,4vw,48px) 0;">
+    <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;font-weight:500;">
+      <a href="#products" style="color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;">Products</a><span>/</span><span style="color:#2F4A5E;font-weight:600;">Lung Screening Spirometer</span>
+    </nav>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(20px,4vw,48px) clamp(28px,3.5vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(32px,5vw,64px);align-items:center;">
+    <div style="display:flex;flex-direction:column;gap:22px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">MEDICAL DEVICE · DIAGNOSTICS</div>
+      <h1 style="margin:0;font-size:clamp(26px,3vw,40px);line-height:1.15;font-weight:700;color:#2F4A5E;">Lung Screening Spirometer</h1>
+      <p style="margin:0;font-size:17px;line-height:1.75;max-width:520px;text-wrap:pretty;">A handheld, USB-powered spirometer with dedicated software for lung function testing.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;">
+        <a href="#contact/spirometer-order" style="font-size:14px;font-weight:700;text-decoration:none;background:#82AA69;color:#1C2B14;padding:16px 28px;border-radius:999px;" style-hover="background:#94BA7C;color:#1C2B14;" style-focus="outline:3px solid #496A83;outline-offset:3px;">Enquire / Order</a>
+        <a href="#spiro-tech" onClick="{{ goTech }}" style="font-size:14px;font-weight:600;text-decoration:none;border:1.5px solid #496A83;color:#496A83;padding:15px 28px;border-radius:999px;" style-hover="background:#F3F6F8;" style-focus="outline:3px solid #82AA69;outline-offset:3px;">Technical information</a>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;">
+      <img src="assets/spirometer-device.png" alt="Spirometer handset with USB cable" style="width:100%;max-width:600px;height:auto;display:block;">
+    </div>
+  </section>
+
+  <section style="background:#F3F6F8;">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,72px);">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">WHAT IS A SPIROMETER?</div>
+        <h2 style="margin:0;font-size:clamp(24px,2.8vw,34px);line-height:1.25;font-weight:700;color:#2F4A5E;text-wrap:balance;">A simple breathing test that measures airflow.</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px;font-size:17px;line-height:1.8;">
+        <p style="margin:0;text-wrap:pretty;">A spirometer measures how much air a person breathes out and in, and how quickly. During a test, the person breathes through a mouthpiece attached to the handset, following a healthcare professional's instructions.</p>
+        <p style="margin:0;text-wrap:pretty;">A turbine inside the handset records the airflow. The connected software turns these readings into measured values and graphs, such as Flow-Volume and Volume-Time curves, which the healthcare professional reviews.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(28px,4vw,56px);align-items:center;">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">FOR HEALTHCARE PROFESSIONALS</div>
+      <h2 style="margin:0;font-size:clamp(22px,2.4vw,28px);line-height:1.3;font-weight:700;letter-spacing:0.04em;color:#2F4A5E;text-wrap:balance;">HOW SPIROMETRY SUPPORTS COPD DIAGNOSIS</h2>
+      <p style="margin:0;font-size:16px;line-height:1.75;text-wrap:pretty;">Spirometry plays an important role in confirming airflow obstruction in patients where COPD is suspected. Healthcare professionals consider symptoms such as persistent breathlessness, chronic cough or sputum production alongside relevant risk factors and clinical history.</p>
+      <p style="margin:0;font-size:16px;line-height:1.75;text-wrap:pretty;">A key measurement is the <strong style="font-weight:700;color:#2F4A5E;">FEV1/FVC ratio</strong>. In the appropriate clinical context, a <strong style="font-weight:700;color:#2F4A5E;">post-bronchodilator FEV1/FVC below 0.70</strong> confirms persistent airflow obstruction consistent with COPD.</p>
+      <p style="margin:0;font-size:14px;line-height:1.65;font-style:italic;color:#6E6E77;text-wrap:pretty;">Spirometry results should always be interpreted alongside the patient's wider clinical assessment.</p>
+    </div>
+    <div style="background:#496A83;border-radius:20px;padding:clamp(22px,3vw,32px);display:flex;flex-direction:column;gap:20px;">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;">
+        <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><span style="font-size:18px;font-weight:700;color:#FFFFFF;">FEV1</span><span style="font-size:13px;line-height:1.45;color:#E6EDF2;">Forced expiratory volume in 1 second</span></div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><span style="font-size:18px;font-weight:700;color:#FFFFFF;">FVC</span><span style="font-size:13px;line-height:1.45;color:#E6EDF2;">Forced vital capacity</span></div>
+        <div style="background:#82AA69;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><span style="font-size:18px;font-weight:700;color:#1C2B14;">FEV1/FVC</span><span style="font-size:13px;line-height:1.45;color:#1C2B14;">Key ratio for airflow obstruction</span></div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><span style="font-size:18px;font-weight:700;color:#FFFFFF;">Post-BD</span><span style="font-size:13px;line-height:1.45;color:#E6EDF2;">Post-bronchodilator assessment</span></div>
+      </div>
+      <p style="margin:0;padding-top:18px;border-top:1px solid rgba(255,255,255,0.22);font-size:15px;line-height:1.7;color:#FFFFFF;text-wrap:pretty;">The Imbue Lung Screening Spirometer supports FVC testing, pre- and post-bronchodilation testing and Flow-Volume and Volume-Time graphs, providing healthcare professionals with practical lung-function data in everyday practice.</p>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,72px);align-items:center;">
+    <div style="display:flex;align-items:center;justify-content:center;">
+      <img src="assets/spirometer-software.png" alt="Spirometer software showing Flow-Volume and Volume-Time graphs on a laptop" style="width:100%;max-width:560px;height:auto;display:block;">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:22px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">THE SOFTWARE</div>
+      <h2 style="margin:0;font-size:clamp(24px,2.8vw,34px);line-height:1.25;font-weight:700;color:#2F4A5E;text-wrap:balance;">Easy-to-use software that does the work for you.</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <sc-for list="{{ swTabs }}" as="t" hint-placeholder-count="2">
+          <button onClick="{{ t.onClick }}" style="font-family:inherit;font-size:13px;font-weight:600;padding:10px 18px;border-radius:999px;cursor:pointer;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.color }};" style-focus="outline:3px solid #82AA69;outline-offset:2px;">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ swIsProgram }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:16px;font-size:17px;line-height:1.8;">
+          <p style="margin:0;text-wrap:pretty;">The spirometer software runs on a Windows PC or laptop and records every test in real time. It displays <strong style="font-weight:700;color:#2F4A5E;">Flow-Volume and Volume-Time graphs</strong>, calculates lung age and compares results against built-in predicted equations.</p>
+          <p style="margin:0;text-wrap:pretty;">Results can be <strong style="font-weight:700;color:#2F4A5E;">auto-interpreted</strong>, compared pre- and post-bronchodilation, and tracked as trends over time. Doctors can add notes and print single or all curves.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ swIsEasy }}" hint-placeholder-val="{{ false }}">
+        <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border-top:1px solid #E6EBEF;">
+          <li style="display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #E6EBEF;font-size:16px;line-height:1.6;"><span style="width:32px;height:32px;border-radius:50%;background:#EEF4EA;color:#4F7A3A;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</span><span><strong style="font-weight:700;color:#2F4A5E;">Plug in via USB.</strong> The handset draws power from the computer, so no batteries or chargers are needed.</span></li>
+          <li style="display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #E6EBEF;font-size:16px;line-height:1.6;"><span style="width:32px;height:32px;border-radius:50%;background:#EEF4EA;color:#4F7A3A;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</span><span><strong style="font-weight:700;color:#2F4A5E;">Select the test.</strong> Choose FVC, SVC or MVV, with auto or manual manoeuvre selection.</span></li>
+          <li style="display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #E6EBEF;font-size:16px;line-height:1.6;"><span style="width:32px;height:32px;border-radius:50%;background:#EEF4EA;color:#4F7A3A;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</span><span><strong style="font-weight:700;color:#2F4A5E;">Review and print.</strong> View graphs and auto-interpretation instantly, add notes and print a report.</span></li>
+        </ol>
+      </sc-if>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) 0;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px;">
+      <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="3">
+        <div style="border:1px solid #E1E7EC;border-radius:18px;padding:22px 24px;display:flex;align-items:center;gap:16px;">
+          <div style="width:52px;height:52px;border-radius:50%;background:#EEF4EA;display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ b.icon }}</div>
+          <div style="font-size:15px;font-weight:700;letter-spacing:0.16em;color:#2F4A5E;">{{ b.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px);display:flex;flex-direction:column;gap:32px;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">FEATURES</div>
+      <h2 style="margin:0;font-size:clamp(24px,2.8vw,34px);font-weight:700;color:#2F4A5E;">Handset and software</h2>
+    </div>
+    <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));column-gap:48px;">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="12">
+        <li style="display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #EEF1F4;font-size:16px;line-height:1.55;color:#4A4A52;">
+          <span style="width:8px;height:8px;border-radius:50%;background:#82AA69;flex-shrink:0;margin-top:8px;"></span><span>{{ f }}</span>
+        </li>
+      </sc-for>
+    </ul>
+  </section>
+
+  <section id="spiro-tech" style="background:#F3F6F8;">
+    <div style="max-width:960px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px);display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">TECHNICAL INFORMATION</div>
+        <h2 style="margin:0;font-size:clamp(24px,2.8vw,34px);font-weight:700;color:#2F4A5E;">Specifications</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <sc-for list="{{ accordions }}" as="a" hint-placeholder-count="6">
+          <div style="background:#FFFFFF;border:1px solid {{ a.border }};border-radius:14px;overflow:hidden;">
+            <button onClick="{{ a.toggle }}" aria-expanded="{{ a.open }}" style="width:100%;font-family:inherit;background:transparent;border:0;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;text-align:left;" style-focus="outline:3px solid #82AA69;outline-offset:-3px;">
+              <span style="font-size:16px;font-weight:700;color:#2F4A5E;">{{ a.title }}</span>
+              <span style="width:32px;height:32px;border-radius:50%;background:#EEF2F5;color:#496A83;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:500;flex-shrink:0;">{{ a.sign }}</span>
+            </button>
+            <sc-if value="{{ a.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 24px 22px;display:flex;flex-direction:column;gap:18px;">
+                <sc-if value="{{ a.note }}" hint-placeholder-val="{{ false }}">
+                  <p style="margin:0;font-size:15px;line-height:1.7;color:#4A4A52;">{{ a.note }}</p>
+                </sc-if>
+                <sc-for list="{{ a.groups }}" as="g" hint-placeholder-count="1">
+                  <div style="display:flex;flex-direction:column;">
+                    <sc-if value="{{ g.heading }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#496A83;padding:6px 0 10px;">{{ g.heading }}</div>
+                    </sc-if>
+                    <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+                      <div style="display:grid;grid-template-columns:minmax(0,{{ g.labelCol }}) minmax(0,1fr);gap:16px;padding:12px 0;border-top:1px solid #EEF1F4;font-size:15px;line-height:1.6;">
+                        <span style="font-weight:600;color:#2F4A5E;">{{ r.k }}</span>
+                        <span style="color:{{ r.color }};font-style:{{ r.fs }};">{{ r.v }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) 40px;">
+    <div style="background:#496A83;border-radius:24px;padding:clamp(32px,5vw,56px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:28px;">
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:620px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#D9E6CF;">AVAILABLE TO HEALTHCARE PROFESSIONALS</div>
+        <p style="margin:0;font-size:clamp(18px,1.8vw,22px);line-height:1.5;font-weight:500;color:#FFFFFF;text-wrap:pretty;">For product enquiries, further information or to place an order, please contact Imbue Healthcare.</p>
+      </div>
+      <a href="#contact/spirometer-order" style="font-size:14px;font-weight:700;text-decoration:none;background:#82AA69;color:#1C2B14;padding:16px 30px;border-radius:999px;" style-hover="background:#94BA7C;color:#1C2B14;" style-focus="outline:3px solid #FFFFFF;outline-offset:3px;">Enquire / Order</a>
+    </div>
+    <div style="margin-top:28px;padding-top:24px;border-top:1px solid #E6EBEF;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:24px 40px;font-size:13px;line-height:1.65;color:#4A4A52;">
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#496A83;">DEVICE</span>
+        <span style="font-weight:600;color:#2F4A5E;">Helios Spirometer- Models Helios 702 and Helios 401</span>
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#496A83;padding-top:8px;">MANUFACTURED BY</span>
+        <span>Recorders &amp; Medicare Systems (P) Ltd. Plot No. 11, HSIIDC IT Park, Sector 22Panchkula – 134114, Haryana, India</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#496A83;">SAHPRA APPLICANT</span>
+        <span style="font-weight:700;color:#2F4A5E;">MNANDI PHARMA</span>
+        <span>62 Constantia Ave, Mnandi AH, Centurion, 0157</span>
+        <span><a href="tel:+27792496631" style="color:#496A83;" style-hover="color:#2F4A5E;">+27 79 249 6631</a> | <a href="mailto:info@mnandipharma.com" style="color:#496A83;" style-hover="color:#2F4A5E;">info@mnandipharma.com</a></span>
+        <a href="https://mnandipharma.com" target="_blank" rel="noopener" style="color:#496A83;" style-hover="color:#2F4A5E;">mnandipharma.com</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#496A83;">QUALITY &amp; COMPLIANCE</span>
+        <span>Manufactured under a quality management system certified to ISO 13485:2016 and ISO 9001:2015.</span>
+        <span>Designed and tested to IEC 60601-1, IEC 60601-1-2, IEC 60601-1-6, IEC 62366-1, IEC 62304 and ISO 26782:2009.</span>
+        <span style="font-weight:700;color:#2F4A5E;">CE (MDR 2017/745)</span>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<!-- ============ SERVICES ============ -->
+<sc-if value="{{ isServices }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Services" style="background:#F3F6F8;">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) clamp(28px,3.5vw,44px);display:flex;flex-direction:column;gap:18px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">SERVICES</div>
+      <h1 style="margin:0;font-size:clamp(34px,4.4vw,54px);line-height:1.1;font-weight:700;color:#2F4A5E;">Our Services</h1>
+      <p style="margin:0;font-size:17px;line-height:1.75;color:#6E6E77;max-width:none;">A specialist commercial partner to the pharmaceutical and medical-device industries, supporting healthcare businesses across every stage of a product's journey, from strategy and launch through to sales, marketing and patient support.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;padding-top:8px;">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="4">
+          <a href="{{ s.anchor }}" onClick="{{ s.jump }}" style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-decoration:none;color:#496A83;border:1px solid #C9D6DF;background:#FFFFFF;padding:10px 18px;border-radius:999px;" style-hover="border-color:#496A83;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">{{ s.title }}</a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(12px,2vw,24px) clamp(20px,4vw,48px) clamp(16px,2vw,24px);display:flex;flex-direction:column;">
+    <sc-for list="{{ services }}" as="s" hint-placeholder-count="4">
+      <article id="{{ s.id }}" style="display:flex;flex-direction:column;gap:20px;padding:clamp(28px,3.5vw,44px) 0;border-bottom:1px solid #E6EBEF;">
+        <div style="display:flex;align-items:center;gap:18px;">
+          <div style="width:56px;height:56px;border-radius:16px;background:#EEF4EA;display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ s.iconLg }}</div>
+          <div style="display:flex;align-items:baseline;gap:14px;">
+            <h2 style="margin:0;font-size:clamp(22px,2.4vw,28px);font-weight:700;letter-spacing:0.12em;color:#2F4A5E;">{{ s.title }}</h2>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;min-width:0;">
+          <p style="margin:0;max-width:960px;font-size:clamp(18px,1.6vw,20px);line-height:1.6;font-weight:500;color:#2F4A5E;text-wrap:pretty;">{{ s.lead }}</p>
+          <p style="margin:0;max-width:960px;font-size:16px;line-height:1.8;text-wrap:pretty;">{{ s.body }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <sc-for list="{{ s.tags }}" as="t" hint-placeholder-count="4">
+              <span style="font-size:12px;font-weight:500;color:#496A83;background:#EEF2F5;padding:6px 11px;border-radius:999px;white-space:nowrap;">{{ t }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </article>
+    </sc-for>
+  </section>
+</sc-if>
+
+<!-- ============ CONTACT ============ -->
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Contact" style="background:#F3F6F8;">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:clamp(36px,5vw,72px);align-items:start;">
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">CONTACT US</div>
+        <h1 style="margin:0;font-size:clamp(32px,4vw,50px);line-height:1.12;font-weight:700;color:#2F4A5E;">Contact Imbue Healthcare</h1>
+        <p style="margin:0;font-size:17px;line-height:1.75;text-wrap:pretty;">Whether you are looking to order the Spirometer, enquire about a product or find out more about our pharmaceutical and medical-device services, get in touch with our team.</p>
+        <div style="display:flex;flex-direction:column;border-top:1px solid #DCE3E8;margin-top:8px;">
+          <div style="display:flex;flex-direction:column;gap:4px;padding:18px 0;border-bottom:1px solid #DCE3E8;">
+            <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#6E6E77;">ORDERS</span>
+            <a href="mailto:orders@imbuehealthcare.com" style="font-size:17px;font-weight:600;color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;">orders@imbuehealthcare.com</a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;padding:18px 0;border-bottom:1px solid #DCE3E8;">
+            <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#6E6E77;">GENERAL ENQUIRIES</span>
+            <a href="mailto:info@imbuehealthcare.com" style="font-size:17px;font-weight:600;color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;">info@imbuehealthcare.com</a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;padding:18px 0;border-bottom:1px solid #DCE3E8;">
+            <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#6E6E77;">TELEPHONE</span>
+            <a href="tel:+27827869861" style="font-size:17px;font-weight:600;color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;">+27 82 786 9861</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#FFFFFF;border-radius:24px;padding:clamp(20px,3vw,32px);border:1px solid #E1E7EC;">
+        <sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ false }}">
+          <div role="status" style="display:flex;flex-direction:column;align-items:flex-start;gap:20px;padding:24px 0;">
+            <div style="width:60px;height:60px;border-radius:50%;background:#EEF4EA;display:flex;align-items:center;justify-content:center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4F7A3A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17 19 7"></polyline></svg>
+            </div>
+            <h2 style="margin:0;font-size:26px;font-weight:700;color:#2F4A5E;">Thank you — your enquiry has been sent.</h2>
+            <p style="margin:0;font-size:17px;line-height:1.7;">Our team will be in touch shortly.</p>
+            <p style="margin:0;font-size:13px;line-height:1.6;color:#6E6E77;">Sent to {{ sentTo }} · Subject: {{ sentSubject }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;padding-top:6px;">
+              <a href="#home" style="font-size:14px;font-weight:700;text-decoration:none;background:#496A83;color:#FFFFFF;padding:14px 26px;border-radius:999px;" style-hover="background:#3D5A70;color:#FFFFFF;" style-focus="outline:3px solid #82AA69;outline-offset:3px;">Back to Home</a>
+              <button onClick="{{ resetForm }}" style="font-family:inherit;font-size:14px;font-weight:600;background:transparent;color:#496A83;border:1.5px solid #496A83;padding:13px 24px;border-radius:999px;cursor:pointer;" style-focus="outline:3px solid #82AA69;outline-offset:3px;">Send another enquiry</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submit }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;">
+              <h2 style="margin:0;font-size:20px;font-weight:700;color:#2F4A5E;">Send an enquiry</h2>
+              <span style="font-size:13px;color:#6E6E77;">* Required</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px;">
+              <label style="display:flex;flex-direction:column;gap:6px;">
+                <span style="font-size:14px;font-weight:600;color:#2F4A5E;">Name *</span>
+                <input type="text" value="{{ form.name }}" onChange="{{ onName }}" onBlur="{{ blurName }}" autoComplete="name" aria-invalid="{{ err.nameBool }}" style="font-family:inherit;font-size:15px;color:#2A2A30;padding:10px 14px;border-radius:10px;border:1.5px solid {{ err.nameBorder }};background:#FFFFFF;outline:none;" style-focus="border-color:#496A83;box-shadow:0 0 0 4px rgba(73,106,131,0.18);">
+                <sc-if value="{{ err.name }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;font-weight:500;color:#B42318;">{{ err.name }}</span></sc-if>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;">
+                <span style="font-size:14px;font-weight:600;color:#2F4A5E;">Company / Practice</span>
+                <input type="text" value="{{ form.company }}" onChange="{{ onCompany }}" autoComplete="organization" style="font-family:inherit;font-size:15px;color:#2A2A30;padding:10px 14px;border-radius:10px;border:1.5px solid #CFD8DF;background:#FFFFFF;outline:none;" style-focus="border-color:#496A83;box-shadow:0 0 0 4px rgba(73,106,131,0.18);">
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;">
+                <span style="font-size:14px;font-weight:600;color:#2F4A5E;">Email *</span>
+                <input type="email" value="{{ form.email }}" onChange="{{ onEmail }}" onBlur="{{ blurEmail }}" autoComplete="email" aria-invalid="{{ err.emailBool }}" style="font-family:inherit;font-size:15px;color:#2A2A30;padding:10px 14px;border-radius:10px;border:1.5px solid {{ err.emailBorder }};background:#FFFFFF;outline:none;" style-focus="border-color:#496A83;box-shadow:0 0 0 4px rgba(73,106,131,0.18);">
+                <sc-if value="{{ err.email }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;font-weight:500;color:#B42318;">{{ err.email }}</span></sc-if>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;">
+                <span style="font-size:14px;font-weight:600;color:#2F4A5E;">Telephone Number *</span>
+                <input type="tel" value="{{ form.phone }}" onChange="{{ onPhone }}" onBlur="{{ blurPhone }}" autoComplete="tel" aria-invalid="{{ err.phoneBool }}" style="font-family:inherit;font-size:15px;color:#2A2A30;padding:10px 14px;border-radius:10px;border:1.5px solid {{ err.phoneBorder }};background:#FFFFFF;outline:none;" style-focus="border-color:#496A83;box-shadow:0 0 0 4px rgba(73,106,131,0.18);">
+                <sc-if value="{{ err.phone }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;font-weight:500;color:#B42318;">{{ err.phone }}</span></sc-if>
+              </label>
+            </div>
+
+            <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;">
+              <legend style="font-size:14px;font-weight:600;color:#2F4A5E;padding:0 0 10px;">I am a Healthcare Professional *</legend>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <sc-for list="{{ hcpOptions }}" as="o" hint-placeholder-count="2">
+                  <label style="display:flex;align-items:center;gap:10px;padding:8px 16px;border-radius:10px;border:1.5px solid {{ o.border }};background:{{ o.bg }};cursor:pointer;min-width:110px;min-height:44px;">
+                    <input type="radio" name="hcp" value="{{ o.value }}" checked="{{ o.checked }}" onChange="{{ o.onChange }}" style="width:18px;height:18px;accent-color:#496A83;margin:0;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">
+                    <span style="font-size:15px;font-weight:600;color:#2F4A5E;">{{ o.value }}</span>
+                  </label>
+                </sc-for>
+              </div>
+              <sc-if value="{{ err.hcp }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;font-weight:500;color:#B42318;">{{ err.hcp }}</span></sc-if>
+            </fieldset>
+
+            <label style="display:flex;flex-direction:column;gap:6px;">
+              <span style="font-size:14px;font-weight:600;color:#2F4A5E;">Nature of Enquiry *</span>
+              <select value="{{ form.enquiry }}" onChange="{{ onEnquiry }}" onBlur="{{ blurEnquiry }}" aria-invalid="{{ err.enquiryBool }}" style="font-family:inherit;font-size:15px;color:#2A2A30;padding:10px 14px;border-radius:10px;border:1.5px solid {{ err.enquiryBorder }};background:#FFFFFF;outline:none;cursor:pointer;" style-focus="border-color:#496A83;box-shadow:0 0 0 4px rgba(73,106,131,0.18);">
+                <option value="">Select an option</option>
+                <option value="Spirometer Order">Spirometer Order</option>
+                <option value="Product Information">Product Information</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Sales">Sales</option>
+                <option value="Patient Support">Patient Support</option>
+                <option value="Strategy">Strategy</option>
+                <option value="General Enquiry">General Enquiry</option>
+              </select>
+              <sc-if value="{{ err.enquiry }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;font-weight:500;color:#B42318;">{{ err.enquiry }}</span></sc-if>
+              <sc-if value="{{ isSpiroOrder }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:13px;line-height:1.5;font-weight:500;color:#496A83;display:flex;gap:8px;align-items:flex-start;"><span style="width:6px;height:6px;border-radius:50%;background:#496A83;margin-top:6px;flex-shrink:0;"></span>The Lung Screening Spirometer is available for purchase by healthcare professionals only.</span>
+              </sc-if>
+            </label>
+
+            <label style="display:flex;flex-direction:column;gap:6px;">
+              <span style="font-size:14px;font-weight:600;color:#2F4A5E;">Message</span>
+              <textarea value="{{ form.message }}" onChange="{{ onMessage }}" rows="5" style="font-family:inherit;font-size:15px;line-height:1.6;color:#2A2A30;padding:10px 14px;border-radius:10px;border:1.5px solid #CFD8DF;background:#FFFFFF;outline:none;resize:vertical;" style-focus="border-color:#496A83;box-shadow:0 0 0 4px rgba(73,106,131,0.18);"></textarea>
+            </label>
+
+            <sc-if value="{{ hcpBlocked }}" hint-placeholder-val="{{ false }}">
+              <div role="status" style="background:#F3F6F8;border:1px solid #D5DFE6;border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
+                <p style="margin:0;font-size:15px;line-height:1.65;color:#2F4A5E;">Spirometer orders are limited to healthcare professionals. You're welcome to send a Product Information or General Enquiry instead, and our team will be happy to help.</p>
+                <button type="button" onClick="{{ switchToInfo }}" style="align-self:flex-start;font-family:inherit;font-size:14px;font-weight:700;background:#FFFFFF;color:#496A83;border:1.5px solid #496A83;padding:8px 16px;border-radius:999px;cursor:pointer;min-height:44px;" style-hover="background:#E8EEF2;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">Switch to Product Information</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+              <div role="alert" style="background:#FEF3F2;border:1px solid #F4C7C3;border-radius:14px;padding:18px 20px;font-size:15px;line-height:1.6;color:#912018;">Something went wrong. Please email us directly at <a href="mailto:info@imbuehealthcare.com" style="color:#912018;font-weight:700;">info@imbuehealthcare.com</a> or call <a href="tel:+27827869861" style="color:#912018;font-weight:700;">+27 82 786 9861</a>.</div>
+            </sc-if>
+            <sc-if value="{{ hasErrors }}" hint-placeholder-val="{{ false }}">
+              <div role="alert" style="font-size:14px;font-weight:500;color:#B42318;">Please complete the highlighted fields.</div>
+            </sc-if>
+
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;">
+              <button type="submit" disabled="{{ submitDisabled }}" style="font-family:inherit;font-size:14px;font-weight:700;letter-spacing:0.1em;background:{{ btn.bg }};color:{{ btn.color }};border:0;padding:14px 28px;border-radius:999px;cursor:{{ btn.cursor }};display:flex;align-items:center;gap:10px;min-height:52px;" style-hover="filter:brightness(1.06);" style-focus="outline:3px solid #496A83;outline-offset:3px;">
+                <sc-if value="{{ isSending }}" hint-placeholder-val="{{ false }}">{{ spinner }}</sc-if>{{ btn.label }}
+              </button>
+              <span style="font-size:13px;color:#6E6E77;">Sends to {{ routeTo }}</span>
+            </div>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<!-- FINAL CTA BAND (not on contact / spirometer) -->
+<sc-if value="{{ showCtaBand }}" hint-placeholder-val="{{ true }}">
+  <section style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px) clamp(28px,3.5vw,44px);">
+    <div style="background:#FFFFFF;padding:clamp(24px,3vw,40px) 0 0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:28px;">
+      
+      <h2 style="margin: 0; font-size: clamp(24px,2.6vw,32px); line-height: 1.25; font-weight: 700; color: #496A83; max-width: 640px; text-wrap: balance; position: relative">{{ ctaText }}</h2><a href="#contact" style="font-size:14px;font-weight:700;text-decoration:none;background:#82AA69;color:#1C2B14;padding:16px 30px;border-radius:999px;" style-hover="background:#94BA7C;color:#1C2B14;" style-focus="outline:3px solid #FFFFFF;outline-offset:3px;">{{ ctaButton }}</a>
+    </div>
+  </section>
+</sc-if>
+
+</main>
+
+<!-- FOOTER -->
+<footer style="background:#2F4A5E;color:#DCE5EB;">
+  <div style="max-width:1240px;margin:0 auto;padding:56px clamp(20px,4vw,48px) 32px;display:flex;flex-direction:column;gap:28px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:36px;">
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <img src="assets/imbue-logo-white.png" alt="Imbue Healthcare" style="height:52px;width:auto;align-self:flex-start;">
+        <span style="font-size:14px;line-height:1.6;">Imbue Healthcare — South African Healthcare Solutions</span>
+      </div>
+      <nav aria-label="Footer" style="display:flex;flex-direction:column;gap:12px;">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#B7C9D6;">EXPLORE</span>
+        <a href="#products" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">Products</a>
+        <a href="#services" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">Services</a>
+        <a href="#about" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">About Us</a>
+        <a href="#contact" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">Contact</a>
+      </nav>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#B7C9D6;">CONTACT</span>
+        <a href="mailto:info@imbuehealthcare.com" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">info@imbuehealthcare.com</a>
+        <a href="mailto:orders@imbuehealthcare.com" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">orders@imbuehealthcare.com</a>
+        <a href="tel:+27827869861" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">+27 82 786 9861</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.18);padding-top:22px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:#B7C9D6;">
+      <span>© 2026 Imbue Healthcare</span>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;">
+        <a href="#home" style="color:#DCE5EB;text-decoration:none;" style-hover="text-decoration:underline;color:#FFFFFF;">Privacy Policy</a>
+        <a href="#home" style="color:#DCE5EB;text-decoration:none;" style-hover="text-decoration:underline;color:#FFFFFF;">Terms of Use</a>
+        <a href="#home" style="color:#DCE5EB;text-decoration:none;" style-hover="text-decoration:underline;color:#FFFFFF;">Regulatory Information</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;simulateOutcome&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;success&quot;,&quot;error&quot;],&quot;default&quot;:&quot;success&quot;,&quot;tsType&quot;:&quot;'success'|'error'&quot;,&quot;section&quot;:&quot;Contact form&quot;},&quot;ordersEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;orders@imbuehealthcare.com&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact form&quot;},&quot;infoEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;info@imbuehealthcare.com&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact form&quot;}}">
+// Form routing — change destination addresses here (or via the ordersEmail / infoEmail props).
+const FORM_ROUTING = {
+  orders: 'orders@imbuehealthcare.com',
+  info: 'info@imbuehealthcare.com',
+  subjectPrefix: 'Website Enquiry – ',
+};
+
+const h = React.createElement;
+const ico = (size, children) => h('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: '#4F7A3A', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }, ...children);
+const ICONS = {
+  marketing: s => ico(s, [h('circle', { key: 1, cx: 12, cy: 12, r: 9 }), h('circle', { key: 2, cx: 12, cy: 12, r: 5 }), h('circle', { key: 3, cx: 12, cy: 12, r: 1.4, fill: '#4F7A3A' })]),
+  sales: s => ico(s, [h('rect', { key: 1, x: 4, y: 13, width: 3.5, height: 7, rx: 1 }), h('rect', { key: 2, x: 10.25, y: 9, width: 3.5, height: 11, rx: 1 }), h('rect', { key: 3, x: 16.5, y: 4, width: 3.5, height: 16, rx: 1 })]),
+  patient: s => ico(s, [h('circle', { key: 1, cx: 12, cy: 12, r: 9 }), h('line', { key: 2, x1: 12, y1: 7.5, x2: 12, y2: 16.5 }), h('line', { key: 3, x1: 7.5, y1: 12, x2: 16.5, y2: 12 })]),
+  strategy: s => ico(s, [h('circle', { key: 1, cx: 5.5, cy: 18, r: 2.2 }), h('circle', { key: 2, cx: 12, cy: 7, r: 2.2 }), h('circle', { key: 3, cx: 18.5, cy: 15, r: 2.2 }), h('line', { key: 4, x1: 6.7, y1: 16, x2: 10.9, y2: 8.9 }), h('line', { key: 5, x1: 13.3, y1: 8.8, x2: 17.3, y2: 13.2 })]),
+  cost: s => ico(s, [h('circle', { key: 1, cx: 12, cy: 12, r: 9 }), h('text', { key: 2, x: 12, y: 16, textAnchor: 'middle', fontSize: 11, fontWeight: 700, fill: '#4F7A3A', stroke: 'none', fontFamily: 'Montserrat' }, 'R')]),
+  easy: s => ico(s, [h('circle', { key: 1, cx: 12, cy: 12, r: 9 }), h('polyline', { key: 2, points: '7.5 12.5 10.5 15.5 16.5 9' })]),
+  portable: s => ico(s, [h('rect', { key: 1, x: 3.5, y: 8, width: 17, height: 12, rx: 2 }), h('path', { key: 2, d: 'M9 8V5.5h6V8' })]),
+};
+
+const SERVICES = [
+  { id: 'marketing', title: 'MARKETING', icon: 'marketing', short: 'Clear, relevant communication for pharmaceutical products and medical devices.',
+    lead: 'Translating complex healthcare products into clear, relevant communication for the right audience.',
+    body: 'Strategic healthcare marketing designed around the specific requirements of pharmaceutical products and medical devices, from brand positioning and launch planning through to ongoing marketing activity.',
+    tags: ['Brand positioning', 'Product communications', 'Launch planning', 'Healthcare-professional engagement', 'Educational materials', 'Ongoing marketing activity'] },
+  { id: 'sales', title: 'SALES', icon: 'sales', short: 'Taking products to market and building healthcare-professional relationships.',
+    lead: 'Structured sales approaches that connect healthcare solutions with the people and organisations that need them.',
+    body: 'Commercial and sales support for pharmaceutical products and medical devices: taking products to market, building healthcare-professional relationships and creating structured sales approaches.',
+    tags: ['Market access', 'Healthcare-professional relationships', 'Structured sales approaches'] },
+  { id: 'patient-support', title: 'PATIENT SUPPORT', icon: 'patient', short: 'Helping patients understand the products they use.',
+    lead: 'Bridging the gap between healthcare products and the people using them.',
+    body: 'Patient-focused support including patient education, product information, support materials and initiatives that help patients understand products or devices and how they fit into their healthcare journey.',
+    tags: ['Patient education', 'Product information', 'Support materials', 'Patient initiatives'] },
+  { id: 'strategy', title: 'STRATEGY', icon: 'strategy', short: 'Practical commercial and market strategy for growth.',
+    lead: 'Commercial and market strategy for pharmaceutical and medical-device businesses.',
+    body: 'Identifying opportunities, understanding market requirements and developing practical strategies around positioning, market entry, product launches, sales and ongoing growth.',
+    tags: ['Opportunity identification', 'Market requirements', 'Positioning', 'Market entry', 'Product launches', 'Growth'] },
+];
+
+const PRODUCTS = [
+  { id: 'spirometer', name: 'Lung Screening Spirometer', category: 'MEDICAL DEVICES', cat: 'Medical devices', img: 'assets/spirometer-device.png', href: '#products/spirometer',
+    summary: 'Handheld, USB-powered spirometer with software for FVC, SVC and MVV testing.' },
+];
+const CATEGORIES = ['All', 'Medicines', 'Medical devices', 'Diagnostics'];
+
+const FEATURES = ['Ergonomic handset for precise airflow control', 'Digital turbine with detachable, easy-to-disinfect transducer', 'Auto and manual manoeuvre selection', 'Supports FVC, SVC and MVV tests', 'Includes predicted equations and ethnic corrections', 'Calculates lung age', 'Displays Flow-Volume and Volume-Time graphs', 'Supports pre- and post-bronchodilation testing', 'Tracks trends over time', "Allows doctor's notes", 'Provides auto-interpretation', 'Customised print options for single or all curves'];
+
+const PH = '[Placeholder – not specified in pamphlet]';
+const ACCORDIONS = [
+  { title: 'Technical Specifications', groups: [{ heading: 'GENERAL', rows: [['Communication Interface', 'USB'], ['Power Supply', 'USB powered'], ['Weight', 'Approx. 120 gms, handset only'], ['Dimensions', '150 mm x 35 mm x 25 mm']] },
+    { heading: 'SPIROMETER', rows: [['Max Volume', '8 litres'], ['Flow Range', '-10 to +16 litres/sec'], ['Transducer', 'Bi-directional turbine cartridge'], ['Accuracy', '±1% using a standard 3L calibration syringe'], ['Flow Detection', 'Volume differential'], ['Turbine Sensor', 'Infrared interruption']] }] },
+  { title: 'Measured Parameters', labelCol: '180px', groups: [{ heading: 'TEST TYPE · PARAMETERS', rows: [
+    ['Forced Vital Capacity (FVC)', 'FVC, FEV1, FEV1/FVC%, FEF25-75, PEFR, FIVC, FEV.5, FEV3, PIFR, FEF75-85, FEF.2-1.2, FEF25%, FEF50%, FEF75%, FEV.5/FVC%, FEV3/FVC%, FET, Exp Time, Lung Age, FEV6, FIF25%, FIF50%, FIF75%, FEV.75, FEV1/FEV6, FEV.75/FVC, FEV6/FVC, FEV.75/FEV6, FIV.5, FIV1, FIV3, FIV.5/FIVC, FIV1/FIVC, FIV3/FIVC'],
+    ['Slow Vital Capacity (SVC)', 'SVC, ERV, IRV, VE, Rf, Ti, Te, VT, VT/Ti, Ti/Ttot, IC'],
+    ['MVV', 'MVV, MRf, MVT, ET, ET/IT, IT']] }] },
+  { title: 'Predicted Equations', groups: [{ rows: [['Equations', 'ERS 93, ITS Black, ITS White, Knudson 83, BARCELONA, LAM and Indian Predicted Equations']] }] },
+  { title: 'Minimum Computer Requirements', groups: [{ heading: 'MINIMUM PC/LAPTOP CONFIGURATION', rows: [['Processor', 'Intel i3 10th Generation, 2.5 GHz or higher'], ['OS', 'Windows 10 Professional, 64-bit or higher'], ['RAM', '4 GB or higher'], ['Hard Disk', '500 GB or higher'], ['Display', 'High Resolution LED/TFT'], ['Ports/Drive', 'USB Port/Serial Port, CD/DVD Optical Drive']] }] },
+  { title: 'Hardware & Accessories', groups: [{ heading: 'COMPONENT · QUANTITY', rows: [['Turbine Transducer', '01'], ['Hand Set', '01'], ['USB Cable', '01'], ['Software CD', '01'], ['Adult Nose Clip', '01'], ['Reusable Mouth Pieces', '01'], ['Carry Bag', '01'], ['Paediatric Nose Clip', '01'], ['User Manual', '01']] }] },
+  { title: 'Optional Features', groups: [
+    { heading: 'INCENTIVE SCREENS', rows: [['Paediatric', 'Paediatric software incentives help motivate children to perform better manoeuvres.']] },
+    { heading: 'SPO2 (OPTIONAL)', rows: [['Pulse Rate Range', PH], ['Saturation Range', PH]] },
+    { heading: 'OPTIONAL', rows: [['Accessories', 'Disposable Mouth Pieces, SpO2 Sensor, PC / Laptop, DeskJet / LaserJet Printer, Tele enabled']] }] },
+];
+
+// Blog: add new articles to this array. Block types: lead | p | h2 | q
+const POSTS = [
+  { slug: 'spirometry-made-practical', title: 'Spirometry Made Practical', subheading: 'Bringing portability, usability and meaningful lung function data into everyday practice', author: 'IMBUE',
+    image: 'assets/blog-spirometry.png', imageAlt: 'Healthcare professional reviewing spirometry graphs on a laptop while a patient performs a spirometry test',
+    blocks: [
+      ['lead', 'Respiratory assessment depends on having access to clear, useful information. For healthcare professionals, spirometry can provide important lung function data, but the value of any diagnostic tool also depends on how easily it fits into everyday practice.'],
+      ['p', 'That is why modern spirometry is about more than technical capability. It is also about practicality, portability and ease of use.'],
+      ['h2', 'Making spirometry easier to integrate'],
+      ['p', 'Healthcare professionals work across a range of environments, from busy practices to clinics and occupational health settings. Diagnostic equipment therefore needs to be easy to use, simple to move and straightforward to incorporate into existing workflows.'],
+      ['p', 'The Imbue Lung Screening Spirometer has been positioned around three key benefits: cost effectiveness, ease of use and portability.'],
+      ['h2', 'More than a single reading'],
+      ['p', 'A useful spirometry system should do more than generate one result.'],
+      ['p', 'The Imbue Lung Screening Spirometer supports FVC, SVC and MVV tests, displays Flow-Volume and Volume-Time graphs, supports pre- and post-bronchodilation testing and allows trends to be tracked over time.'],
+      ['p', "It also includes features such as lung-age calculation, predicted equations, doctor's notes and auto-interpretation."],
+      ['h2', 'Why practicality matters'],
+      ['p', 'When choosing diagnostic equipment, healthcare professionals should not only ask:'],
+      ['q', 'What can this device do?'],
+      ['p', 'They should also ask:'],
+      ['q', 'How easily can I use it in my day-to-day practice?'],
+      ['p', 'Portability, usability and clear data presentation are increasingly important considerations when selecting healthcare technology.'],
+      ['p', 'The Imbue Spirometer is USB powered and uses a bi-directional turbine cartridge, helping make it a practical option for professional healthcare environments.'],
+      ['h2', 'A practical approach to spirometry'],
+      ['p', 'At Imbue Healthcare, our focus is on connecting healthcare solutions with the professionals who need them.'],
+      ['p', 'The Lung Screening Spirometer combines portability, ease of use and comprehensive spirometry functionality in one practical system.'],
+      ['p', 'The product is available for purchase by healthcare professionals only.'],
+    ] },
+];
+
+const EMPTY_FORM = { name: '', company: '', email: '', phone: '', hcp: '', enquiry: '', message: '' };
+
+class Component extends DCLogic {
+  state = { route: 'home', menuOpen: false, w: typeof window !== 'undefined' ? window.innerWidth : 1280, open: { 0: true }, cat: 'All',
+    form: { ...EMPTY_FORM }, touched: {}, submitted: false, status: 'idle', sentTo: '', sentSubject: '' };
+
+  componentDidMount() {
+    this.onHash = () => this.applyHash(true);
+    this.onResize = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('hashchange', this.onHash);
+    window.addEventListener('resize', this.onResize);
+    this.applyHash(false);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.onHash);
+    window.removeEventListener('resize', this.onResize);
+  }
+  applyHash(scroll) {
+    const raw = (window.location.hash || '#home').slice(1);
+    if (raw === 'spiro-tech') return;
+    const [page, sub] = raw.split('/');
+    const patch0 = {};
+    let route = ['home', 'about', 'products', 'services', 'contact'].includes(page) ? page : 'home';
+    if (page === 'products' && sub === 'spirometer') route = 'spirometer';
+    const patch = { route, menuOpen: false, ...patch0 };
+    if (route === 'contact' && sub === 'spirometer-order') {
+      patch.form = { ...this.state.form, enquiry: 'Spirometer Order' }; patch.status = 'idle';
+    }
+    this.setState(patch);
+    if (scroll) window.scrollTo(0, 0);
+  }
+  scrollToId(id) {
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+  }
+  validate(f) {
+    const e = {};
+    if (!f.name.trim()) e.name = 'Please enter your name.';
+    if (!f.email.trim()) e.email = 'Please enter your email address.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = 'Please enter a valid email address.';
+    if (!f.phone.trim()) e.phone = 'Please enter your telephone number.';
+    else if (f.phone.replace(/\D/g, '').length < 9) e.phone = 'Please enter a valid telephone number.';
+    if (!f.hcp) e.hcp = 'Please select Yes or No.';
+    if (!f.enquiry) e.enquiry = 'Please select the nature of your enquiry.';
+    return e;
+  }
+  routing() {
+    return { orders: this.props.ordersEmail || FORM_ROUTING.orders, info: this.props.infoEmail || FORM_ROUTING.info };
+  }
+  destinationFor(enquiry) { const r = this.routing(); return enquiry === 'Spirometer Order' ? r.orders : r.info; }
+
+  submit(ev) {
+    ev.preventDefault();
+    const f = this.state.form;
+    const errs = this.validate(f);
+    this.setState({ submitted: true });
+    if (Object.keys(errs).length || (f.enquiry === 'Spirometer Order' && f.hcp === 'No')) return;
+    const to = this.destinationFor(f.enquiry);
+    const subject = FORM_ROUTING.subjectPrefix + f.enquiry;
+    this.setState({ status: 'sending' });
+    // Replace this simulated call with the real form endpoint (payload: { to, subject, ...f }).
+    setTimeout(() => {
+      const fail = (this.props.simulateOutcome ?? 'success') === 'error';
+      this.setState(fail ? { status: 'error' } : { status: 'success', sentTo: to, sentSubject: subject });
+    }, 1400);
+  }
+
+  renderVals() {
+    const { route, w, form: f, touched, submitted, status } = this.state;
+    const isMobile = w < 960;
+    const nav = [['HOME', 'home'], ['ABOUT US', 'about'], ['PRODUCTS', 'products'], ['SERVICES', 'services'], ['CONTACT US', 'contact']];
+    const activeKey = route === 'spirometer' ? 'products' : route === 'article' ? 'blog' : route;
+    const navItems = nav.map(([label, key]) => key === 'contact'
+      ? { label, href: '#contact', color: '#1C2B14', bg: key === activeKey ? '#6F9858' : '#82AA69', pad: '12px 22px', radius: '999px', line: 'transparent' }
+      : { label, href: '#' + key, color: key === activeKey ? '#496A83' : '#4A4A52', bg: 'transparent', pad: '8px 0', radius: '0', line: key === activeKey ? '#82AA69' : 'transparent' });
+
+    const setField = k => e => { const v = e.target.value; this.setState(s => ({ form: { ...s.form, [k]: v }, status: s.status === 'error' ? 'idle' : s.status })); };
+    const blur = k => () => this.setState(s => ({ touched: { ...s.touched, [k]: true } }));
+    const allErr = this.validate(f);
+    const show = k => (submitted || touched[k]) ? allErr[k] : '';
+    const err = {};
+    ['name', 'email', 'phone', 'hcp', 'enquiry'].forEach(k => { const m = show(k); err[k] = m || ''; err[k + 'Bool'] = !!m; err[k + 'Border'] = m ? '#D92D20' : '#CFD8DF'; });
+    const hasErrors = submitted && Object.keys(allErr).length > 0;
+
+    const isSpiroOrder = f.enquiry === 'Spirometer Order';
+    const hcpBlocked = isSpiroOrder && f.hcp === 'No';
+    const isSending = status === 'sending';
+    const submitDisabled = hcpBlocked || isSending;
+    const btn = hcpBlocked ? { bg: '#E4E7EA', color: '#6E6E77', cursor: 'not-allowed', label: 'SEND ENQUIRY' }
+      : isSending ? { bg: '#496A83', color: '#FFFFFF', cursor: 'progress', label: 'SENDING…' }
+      : { bg: '#496A83', color: '#FFFFFF', cursor: 'pointer', label: 'SEND ENQUIRY' };
+
+    const hcpOptions = ['Yes', 'No'].map(v => ({ value: v, checked: f.hcp === v,
+      border: f.hcp === v ? '#496A83' : (err.hcp ? '#D92D20' : '#CFD8DF'), bg: f.hcp === v ? '#F0F4F7' : '#FFFFFF',
+      onChange: () => this.setState(s => ({ form: { ...s.form, hcp: v }, touched: { ...s.touched, hcp: true } })) }));
+
+    const services = SERVICES.map((s, i) => ({ ...s, num: '0' + (i + 1), anchor: '#services', icon: ICONS[s.icon](26), iconLg: ICONS[s.icon](30),
+      jump: e => { e.preventDefault(); this.scrollToId(s.id); } }));
+
+    const visibleProducts = PRODUCTS.filter(p => this.state.cat === 'All' || p.cat === this.state.cat);
+    const categories = CATEGORIES.map(c => { const on = this.state.cat === c; return { label: c, bg: on ? '#496A83' : '#FFFFFF', color: on ? '#FFFFFF' : '#496A83', border: on ? '#496A83' : '#C9D6DF', onClick: () => this.setState({ cat: c }) }; });
+
+    const accordions = ACCORDIONS.map((a, i) => { const open = !!this.state.open[i]; return {
+      title: a.title, open, sign: open ? '−' : '+', border: open ? '#B9C9D5' : '#E1E7EC',
+      toggle: () => this.setState(s => ({ open: { ...s.open, [i]: !s.open[i] } })),
+      groups: a.groups.map(g => ({ heading: g.heading || '', labelCol: a.labelCol || '220px',
+        rows: g.rows.map(([k, v]) => ({ k, v, color: v === PH ? '#8A5A00' : '#4A4A52', fs: v === PH ? 'italic' : 'normal' })) })) }; });
+
+    const ctaMap = {
+      home: ['Looking for a healthcare product or specialist industry support?', 'Get in Touch →'],
+      about: ['Looking for a healthcare product or specialist industry support?', 'Get in Touch →'],
+      products: ['Looking for a specific medicine, device or diagnostic?', 'Get in Touch →'],
+      services: ['Looking for support in the pharmaceutical or medical-device sector?', 'Talk to Imbue →'],
+      blog: ['Looking for a healthcare product or specialist industry support?', 'Get in Touch →'],
+    };
+    const cta = ctaMap[route];
+
+    return {
+      isDesktop: !isMobile, isMobile, menuOpen: this.state.menuOpen, showMobileMenu: isMobile && this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })), closeMenu: () => this.setState({ menuOpen: false }),
+      navItems,
+      isHome: route === 'home', isAbout: route === 'about', isProducts: route === 'products', isSpiro: route === 'spirometer', isServices: route === 'services', isContact: route === 'contact', isBlog: route === 'blog', isArticle: route === 'article',
+      posts: POSTS.map(p => ({ ...p, href: '#blog/' + p.slug, titleCaps: p.title.toUpperCase() })),
+      post: (() => { const p = POSTS.find(x => x.slug === this.state.slug) || POSTS[0]; return { ...p, blocks: p.blocks.map(([t, text]) => ({ text, isLead: t === 'lead', isP: t === 'p', isH2: t === 'h2', isQ: t === 'q' })) }; })(),
+      services, categories, visibleProducts, noProducts: visibleProducts.length === 0,
+      benefits: [{ label: 'COST EFFECTIVE', icon: ICONS.cost(26) }, { label: 'EASY TO USE', icon: ICONS.easy(26) }, { label: 'PORTABLE', icon: ICONS.portable(26) }],
+      features: FEATURES, accordions,
+      swIsProgram: (this.state.swTab || 'program') === 'program', swIsEasy: this.state.swTab === 'easy',
+      swTabs: [['program', 'The program'], ['easy', 'How easy it is to use']].map(([k, label]) => { const on = (this.state.swTab || 'program') === k; return { label, bg: on ? '#496A83' : '#FFFFFF', color: on ? '#FFFFFF' : '#496A83', border: on ? '#496A83' : '#C9D6DF', onClick: () => this.setState({ swTab: k }) }; }),
+      goTech: e => { e.preventDefault(); this.scrollToId('spiro-tech'); },
+      showCtaBand: !!cta, ctaText: cta ? cta[0] : '', ctaButton: cta ? cta[1] : '',
+      form: f, err, hasErrors, hcpOptions, isSpiroOrder, hcpBlocked, isSending, submitDisabled, btn,
+      isSuccess: status === 'success', showForm: status !== 'success', isError: status === 'error',
+      routeTo: f.enquiry ? this.destinationFor(f.enquiry) : this.routing().info,
+      sentTo: this.state.sentTo, sentSubject: this.state.sentSubject,
+      spinner: h('span', { style: { width: 16, height: 16, border: '2px solid rgba(255,255,255,0.4)', borderTopColor: '#FFFFFF', borderRadius: '50%', display: 'inline-block', animation: 'imbspin 0.8s linear infinite' } }),
+      onName: setField('name'), onCompany: setField('company'), onEmail: setField('email'), onPhone: setField('phone'), onEnquiry: setField('enquiry'), onMessage: setField('message'),
+      blurName: blur('name'), blurEmail: blur('email'), blurPhone: blur('phone'), blurEnquiry: blur('enquiry'),
+      switchToInfo: () => this.setState(s => ({ form: { ...s.form, enquiry: 'Product Information' } })),
+      submit: e => this.submit(e),
+      resetForm: () => this.setState({ form: { ...EMPTY_FORM }, touched: {}, submitted: false, status: 'idle' }),
+    };
+  }
+}
+</script>
+</body>
+</html>
