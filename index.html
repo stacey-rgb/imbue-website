@@ -25,7 +25,7 @@ a:hover{color:#2F4A5E;}
 <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.97);border-bottom:1px solid #E4E9ED;">
   <div style="max-width:1240px;margin:0 auto;padding:14px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:24px;">
     <a href="#home" aria-label="Imbue Healthcare — Home" style="display:flex;align-items:center;flex-shrink:0;">
-      <img src="imbue-logo.png" alt="Imbue Healthcare" style="height:72px;width:auto;display:block;">
+      <img src="media/imbue-logo.png" alt="Imbue Healthcare" style="height:72px;width:auto;display:block;">
     </a>
     <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
       <nav aria-label="Main" style="display:flex;align-items:center;gap:32px;">
@@ -92,7 +92,7 @@ a:hover{color:#2F4A5E;}
       </div>
       <div style="position:relative;">
         <div style="border-radius:20px;overflow:hidden;width:100%;max-width:clamp(360px,40vw,540px);aspect-ratio:849/737;margin-left:auto;background:#3E5C72;">
-          <img src="doctor-hero.jpg" alt="Healthcare professional wearing an Imbue Healthcare coat, holding a vial" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+          <img src="media/doctor-hero.jpg" alt="Healthcare professional wearing an Imbue Healthcare coat, holding a vial" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@ a:hover{color:#2F4A5E;}
   <section style="max-width:1240px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,80px);align-items:center;">
     <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
       <div style="border-radius:20px;overflow:hidden;aspect-ratio:16/10;">
-        <img src="team.jpg" alt="Pharmaceutical team reviewing products and data" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;">
+        <img src="media/team.jpg" alt="Pharmaceutical team reviewing products and data" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;">
       </div>
     </sc-if>
     <div style="display:flex;flex-direction:column;gap:20px;">
@@ -120,7 +120,7 @@ a:hover{color:#2F4A5E;}
       </div>
       <div style="background:#FFFFFF;border-radius:24px;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));align-items:center;">
         <div style="padding:clamp(24px,4vw,48px);display:flex;align-items:center;justify-content:center;">
-          <img src="spirometer-device.png" alt="Lung Screening Spirometer handset" style="width:100%;max-width:520px;height:auto;display:block;">
+          <img src="media/spirometer-device.png" alt="Lung Screening Spirometer handset" style="width:100%;max-width:520px;height:auto;display:block;">
         </div>
         <div style="padding:clamp(28px,4vw,56px);display:flex;flex-direction:column;gap:22px;">
           <div style="display:flex;flex-wrap:wrap;gap:8px;">
@@ -170,7 +170,7 @@ a:hover{color:#2F4A5E;}
       <p style="margin:0;font-size:17px;line-height:1.8;font-weight:400;text-wrap:pretty;">Alongside sourcing, registration and distribution, Imbue Healthcare provides <strong style="font-weight:700;color:#2F4A5E;">specialist commercial support</strong> to businesses operating within the pharmaceutical and medical-device sectors. Our capabilities span <strong style="font-weight:700;color:#2F4A5E;">marketing, sales, patient support and strategy</strong>, allowing us to work with healthcare partners across different stages of a product's journey. We combine healthcare industry knowledge with practical commercial support, helping connect products, healthcare professionals and patients more effectively.</p>
     </div>
     <div style="border-radius:20px;overflow:hidden;background:#2F4A5E;aspect-ratio:4/5;width:100%;max-width:440px;justify-self:end;align-self:stretch;height:100%;min-height:0;">
-      <video src="imbue-loop-4x5.mp4" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" aria-label="Imbue Healthcare brand animation" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      <video src="media/imbue-loop-4x5.mp4" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" aria-label="Imbue Healthcare brand animation" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
     </div>
   </section>
   <section style="background:#496A83;">
@@ -202,9 +202,15 @@ a:hover{color:#2F4A5E;}
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:24px;">
       <sc-for list="{{ productCats }}" as="c" hint-placeholder-count="2">
         <a href="{{ c.href }}" style="text-decoration:none;border:1px solid #E1E7EC;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;background:#FFFFFF;" style-hover="border-color:#496A83;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">
-          <div style="aspect-ratio:16/10;background:#FFFFFF;display:flex;align-items:center;justify-content:center;padding:24px;border-bottom:1px solid #EEF1F4;">
-            <sc-if value="{{ c.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ c.img }}" alt="{{ c.name }}" style="max-width:min(100%,300px);max-height:min(100%,330px);object-fit:contain;display:block;"></sc-if>
-            <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ false }}"><div style="width:100%;height:100%;border:1.5px dashed #C9D3DB;border-radius:12px;background:#F7F9FA;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:12px;font-weight:600;letter-spacing:0.06em;color:#6E6E77;">{{ c.name }} photo</div></sc-if>
+          <div style="padding:28px 26px 0;display:flex;">
+            <div aria-hidden="true" style="width:72px;height:72px;border-radius:20px;background:#EEF4EA;display:flex;align-items:center;justify-content:center;">
+              <sc-if value="{{ c.isResp }}" hint-placeholder-val="{{ false }}">
+                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#4F7A3A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v8"></path><path d="M12 11c-1.2 1.4-2.6 2-4 2"></path><path d="M12 11c1.2 1.4 2.6 2 4 2"></path><path d="M8.5 6.5C6 7.5 3.5 11 3.5 16c0 2.5 1.2 4 3 4 2.2 0 3.5-1.6 3.5-4.5V9.5c0-1.6-.6-2.6-1.5-3z"></path><path d="M15.5 6.5c2.5 1 5 4.5 5 9.5 0 2.5-1.2 4-3 4-2.2 0-3.5-1.6-3.5-4.5V9.5c0-1.6.6-2.6 1.5-3z"></path></svg>
+              </sc-if>
+              <sc-if value="{{ c.isEcg }}" hint-placeholder-val="{{ false }}">
+                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#4F7A3A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-8-4.9-8-10.6C4 6.9 6.1 5 8.5 5c1.6 0 2.8.8 3.5 2 .7-1.2 1.9-2 3.5-2C17.9 5 20 6.9 20 9.9c0 5.7-8 10.6-8 10.6z"></path><polyline points="6.5 12 9.5 12 11 9.5 13 14.5 14.5 12 17.5 12"></polyline></svg>
+              </sc-if>
+            </div>
           </div>
           <div style="padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;">
             <span style="font-size:11px;font-weight:700;letter-spacing:0.16em;color:#4F7A3A;">{{ c.countLabel }}</span>
@@ -243,7 +249,7 @@ a:hover{color:#2F4A5E;}
           <sc-for list="{{ g.items }}" as="p" hint-placeholder-count="3">
           <a href="{{ p.href }}" style="text-decoration:none;border:1px solid #E1E7EC;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;background:#FFFFFF;" style-hover="border-color:#496A83;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">
             <div style="aspect-ratio:4/3;background:#FFFFFF;display:flex;align-items:center;justify-content:center;padding:20px;border-bottom:1px solid #EEF1F4;">
-              <sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ p.img }}" alt="{{ p.name }}" style="max-width:min(100%,300px);max-height:min(100%,330px);object-fit:contain;display:block;"></sc-if>
+              <sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{ p.name }}" style="width:100%;height:100%;max-width:300px;max-height:330px;background-image:{{ p.bgImg }};background-size:contain;background-repeat:no-repeat;background-position:center;"></div></sc-if>
               <sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}"><div style="width:100%;height:100%;border:1.5px dashed #C9D3DB;border-radius:12px;background:#F7F9FA;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:12px;font-weight:600;letter-spacing:0.06em;color:#6E6E77;">{{ p.name }} photo</div></sc-if>
             </div>
             <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:8px;">
@@ -306,7 +312,7 @@ a:hover{color:#2F4A5E;}
     </div>
     <figure style="margin:0;display:flex;flex-direction:column;gap:10px;">
       <div style="aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;">
-        <sc-if value="{{ ecg.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ ecg.img }}" alt="{{ ecg.name }}" style="max-width:min(100%,300px);max-height:min(100%,330px);object-fit:contain;display:block;"></sc-if>
+        <sc-if value="{{ ecg.hasImg }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{ ecg.name }}" style="width:100%;height:100%;max-width:300px;max-height:330px;background-image:{{ ecg.bgImg }};background-size:contain;background-repeat:no-repeat;background-position:center;"></div></sc-if>
         <sc-if value="{{ ecg.noImg }}" hint-placeholder-val="{{ false }}"><div style="width:100%;height:100%;border:1.5px dashed #C9D3DB;border-radius:20px;background:#F7F9FA;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:13px;font-weight:600;letter-spacing:0.06em;color:#6E6E77;">{{ ecg.name }} photo</div></sc-if>
       </div>
       <figcaption style="font-size:12px;color:#6E6E77;text-align:right;">{{ imageCredit }}</figcaption>
@@ -386,7 +392,7 @@ a:hover{color:#2F4A5E;}
       </div>
     </div>
     <div style="display:flex;align-items:center;justify-content:center;">
-      <img src="spirometer-device.png" alt="Spirometer handset with USB cable" style="width:100%;max-width:600px;height:auto;display:block;">
+      <img src="media/spirometer-device.png" alt="Spirometer handset with USB cable" style="width:100%;max-width:600px;height:auto;display:block;">
     </div>
   </section>
 
@@ -424,7 +430,7 @@ a:hover{color:#2F4A5E;}
 
   <section style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,72px);align-items:center;">
     <div style="display:flex;align-items:center;justify-content:center;">
-      <img src="spirometer-software.png" alt="Spirometer software showing Flow-Volume and Volume-Time graphs on a laptop" style="width:100%;max-width:560px;height:auto;display:block;">
+      <img src="media/spirometer-software.png" alt="Spirometer software showing Flow-Volume and Volume-Time graphs on a laptop" style="width:100%;max-width:560px;height:auto;display:block;">
     </div>
     <div style="display:flex;flex-direction:column;gap:22px;">
       <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">THE SOFTWARE</div>
@@ -731,7 +737,7 @@ a:hover{color:#2F4A5E;}
   <div style="max-width:1240px;margin:0 auto;padding:56px clamp(20px,4vw,48px) 32px;display:flex;flex-direction:column;gap:28px;">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:36px;">
       <div style="display:flex;flex-direction:column;gap:16px;">
-        <img src="imbue-logo-white.png" alt="Imbue Healthcare" style="height:52px;width:auto;align-self:flex-start;">
+        <img src="media/imbue-logo-white.png" alt="Imbue Healthcare" style="height:52px;width:auto;align-self:flex-start;">
         <span style="font-size:14px;line-height:1.6;">Imbue Healthcare — South African Healthcare Solutions</span>
       </div>
       <nav aria-label="Footer" style="display:flex;flex-direction:column;gap:12px;">
@@ -800,15 +806,15 @@ const SERVICES = [
 ];
 
 const PRODUCTS = [
-  { id: 'spirometer', name: 'Lung Screening Spirometer', category: 'MEDICAL DEVICES', cat: 'Medical devices', img: 'spirometer-device.png', href: '#products/spirometer',
+  { id: 'spirometer', name: 'Lung Screening Spirometer', category: 'MEDICAL DEVICES', cat: 'Medical devices', img: 'media/spirometer-device.png', href: '#products/spirometer',
     summary: 'Handheld, USB-powered spirometer with software for FVC, SVC and MVV testing.' },
 ];
 const CATEGORIES = ['All', 'Medicines', 'Medical devices', 'Diagnostics'];
 
 // ===== Product catalogue — add categories / products here =====
 const IMAGE_CREDIT = 'Image: RMS';
-// ECG photos: set each path once the supplied photo is uploaded (e.g. 'vesta-101.png'). Empty = labelled placeholder.
-const ECG_IMAGES = { 'vesta-101': 'vesta-101.png', 'vesta-301i': 'vesta-301i.png', 'vesta-302i': 'vesta-302i.png', 'vesta-305i': 'vesta-305i.jpg', 'vesta-12ec': 'vesta-12ec.jpg', 'vesta-12c': 'vesta-12c.jpg', 'vesta-121i': 'vesta-121i.png', 'ulterius-501': 'ulterius-501.png' };
+// ECG photos: set each path once the supplied photo is uploaded (e.g. 'media/vesta-101.png'). Empty = labelled placeholder.
+const ECG_IMAGES = { 'vesta-101': 'media/vesta-101.png', 'vesta-301i': 'media/vesta-301i.png', 'vesta-302i': 'media/vesta-302i.png', 'vesta-305i': 'media/vesta-305i.jpg', 'vesta-12ec': 'media/vesta-12ec.jpg', 'vesta-12c': 'media/vesta-12c.jpg', 'vesta-121i': 'media/vesta-121i.png', 'ulterius-501': 'media/ulterius-501.png' };
 const ECG_PRODUCTS = [
   { slug: 'vesta-101', name: 'RMS Vesta 101', short: 'Vesta 101', glanceType: 'Single-channel portable', glanceFeature: 'One-channel printout',
     subtitle: 'Single-channel portable ECG • Simple, economical 12-lead ECG recording',
@@ -860,7 +866,7 @@ const ECG_PRODUCTS = [
     suitable: 'Remote screening and outreach services.' },
 ];
 const ECG_BY_SLUG = Object.fromEntries(ECG_PRODUCTS.map(p => [p.slug, p]));
-const SPIRO_ITEM = { name: 'Lung Screening Spirometer', type: 'Medical device · Diagnostics', img: 'spirometer-device.png', href: '#products/spirometer' };
+const SPIRO_ITEM = { name: 'Lung Screening Spirometer', type: 'Medical device · Diagnostics', img: 'media/spirometer-device.png', href: '#products/spirometer' };
 const ecgItem = slug => { const p = ECG_BY_SLUG[slug]; return { name: p.name, type: p.subtitle.split(' • ')[0], img: ECG_IMAGES[slug] || '', href: '#products/ecg/' + slug }; };
 const PRODUCT_CATEGORIES = [
   { slug: 'respiratory', name: 'Respiratory Diagnostics', intro: '', summary: 'Lung Screening Spirometer', groups: [{ heading: '', items: [SPIRO_ITEM] }] },
@@ -874,7 +880,7 @@ const PRODUCT_CATEGORIES = [
 ];
 const CAT_BY_SLUG = Object.fromEntries(PRODUCT_CATEGORIES.map(c => [c.slug, c]));
 const ORDER_ENQUIRIES = ['Spirometer Order', 'ECG Equipment'];
-const withImg = o => ({ ...o, hasImg: !!o.img, noImg: !o.img });
+const withImg = o => ({ ...o, hasImg: !!o.img, noImg: !o.img, bgImg: o.img ? 'url("' + o.img + '")' : 'none' });
 
 const FEATURES = ['Ergonomic handset for precise airflow control', 'Digital turbine with detachable, easy-to-disinfect transducer', 'Auto and manual manoeuvre selection', 'Supports FVC, SVC and MVV tests', 'Includes predicted equations and ethnic corrections', 'Calculates lung age', 'Displays Flow-Volume and Volume-Time graphs', 'Supports pre- and post-bronchodilation testing', 'Tracks trends over time', "Allows doctor's notes", 'Provides auto-interpretation', 'Customised print options for single or all curves'];
 
@@ -898,7 +904,7 @@ const ACCORDIONS = [
 // Blog: add new articles to this array. Block types: lead | p | h2 | q
 const POSTS = [
   { slug: 'spirometry-made-practical', title: 'Spirometry Made Practical', subheading: 'Bringing portability, usability and meaningful lung function data into everyday practice', author: 'IMBUE',
-    image: 'blog-spirometry.png', imageAlt: 'Healthcare professional reviewing spirometry graphs on a laptop while a patient performs a spirometry test',
+    image: 'media/blog-spirometry.png', imageAlt: 'Healthcare professional reviewing spirometry graphs on a laptop while a patient performs a spirometry test',
     blocks: [
       ['lead', 'Respiratory assessment depends on having access to clear, useful information. For healthcare professionals, spirometry can provide important lung function data, but the value of any diagnostic tool also depends on how easily it fits into everyday practice.'],
       ['p', 'That is why modern spirometry is about more than technical capability. It is also about practicality, portability and ease of use.'],
@@ -1068,7 +1074,7 @@ class Component extends DCLogic {
       post: (() => { const p = POSTS.find(x => x.slug === this.state.slug) || POSTS[0]; return { ...p, blocks: p.blocks.map(([t, text]) => ({ text, isLead: t === 'lead', isP: t === 'p', isH2: t === 'h2', isQ: t === 'q' })) }; })(),
       isCategory: route === 'category', isEcgProduct: route === 'ecgProduct', imageCredit: IMAGE_CREDIT,
       closeDrop: () => this.setState({ dropOpen: false }),
-      productCats: PRODUCT_CATEGORIES.map(c => { const n = c.groups.reduce((a, g) => a + g.items.length, 0); const first = c.groups[0].items.find(i => i.img); return withImg({ name: c.name, href: '#products/' + c.slug, summary: c.summary, countLabel: (n + (n === 1 ? ' PRODUCT' : ' PRODUCTS')), img: first ? first.img : '' }); }),
+      productCats: PRODUCT_CATEGORIES.map(c => { const n = c.groups.reduce((a, g) => a + g.items.length, 0); const first = c.groups[0].items.find(i => i.img); return withImg({ isResp: c.slug === 'respiratory', isEcg: c.slug === 'ecg', name: c.name, href: '#products/' + c.slug, summary: c.summary, countLabel: (n + (n === 1 ? ' PRODUCT' : ' PRODUCTS')), img: first ? first.img : '' }); }),
       cat: (() => { const c = CAT_BY_SLUG[this.state.catSlug] || PRODUCT_CATEGORIES[0]; return { name: c.name, intro: c.intro, hasTable: !!c.hasTable,
         groups: c.groups.map(g => ({ heading: g.heading, items: g.items.map(withImg) })),
         table: c.hasTable ? ECG_PRODUCTS.map(p => ({ name: p.short, type: p.glanceType, feature: p.glanceFeature, href: '#products/ecg/' + p.slug, aria: 'View ' + p.name })) : [] }; })(),
