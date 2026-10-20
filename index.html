@@ -31,7 +31,18 @@ a:hover{color:#2F4A5E;}
       <nav aria-label="Main" style="display:flex;align-items:center;gap:32px;">
         <div style="display:flex;align-items:center;gap:28px;">
           <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
-            <a href="{{ n.href }}" style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-decoration:none;color:{{ n.color }};background:{{ n.bg }};padding:{{ n.pad }};border-radius:{{ n.radius }};border-bottom:2px solid {{ n.line }};outline:none;" style-hover="opacity:0.85;" style-focus="outline:none;">{{ n.label }}</a>
+            <div onMouseEnter="{{ n.open }}" onMouseLeave="{{ n.close }}" onFocus="{{ n.open }}" onBlur="{{ n.blur }}" style="position:relative;display:flex;align-items:center;">
+              <a href="{{ n.href }}" aria-haspopup="{{ n.hasSub }}" aria-expanded="{{ n.showDrop }}" style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-decoration:none;color:{{ n.color }};background:{{ n.bg }};padding:{{ n.pad }};border-radius:{{ n.radius }};border-bottom:2px solid {{ n.line }};outline:none;display:flex;align-items:center;gap:6px;" style-hover="opacity:0.85;" style-focus="outline:none;">{{ n.label }}<sc-if value="{{ n.hasSub }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="font-size:9px;">▼</span></sc-if></a>
+              <sc-if value="{{ n.showDrop }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;top:100%;left:-18px;padding-top:12px;z-index:60;">
+                  <div style="background:#FFFFFF;border:1px solid #E1E7EC;border-radius:14px;box-shadow:0 12px 32px rgba(47,74,94,0.14);padding:8px;min-width:260px;display:flex;flex-direction:column;">
+                    <sc-for list="{{ n.sub }}" as="sb" hint-placeholder-count="2">
+                      <a href="{{ sb.href }}" onClick="{{ closeDrop }}" style="font-size:14px;font-weight:600;color:#2F4A5E;text-decoration:none;padding:12px 14px;border-radius:10px;display:flex;flex-direction:column;gap:3px;" style-hover="background:#F3F6F8;color:#2F4A5E;" style-focus="outline:3px solid #82AA69;outline-offset:-3px;">{{ sb.label }}<span style="font-size:12px;font-weight:500;color:#6E6E77;">{{ sb.count }}</span></a>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
           </sc-for>
         </div>
         
@@ -52,6 +63,11 @@ a:hover{color:#2F4A5E;}
     <nav aria-label="Mobile" style="border-top:1px solid #E4E9ED;background:#FFFFFF;padding:8px clamp(20px,4vw,48px) 20px;display:flex;flex-direction:column;">
       <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
         <a href="{{ n.href }}" onClick="{{ closeMenu }}" style="font-size:15px;font-weight:600;letter-spacing:0.06em;text-decoration:none;color:{{ n.color }};padding:16px 0;border-bottom:1px solid #EEF1F4;">{{ n.label }}</a>
+        <sc-if value="{{ n.hasSub }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ n.sub }}" as="sb" hint-placeholder-count="2">
+            <a href="{{ sb.href }}" onClick="{{ closeMenu }}" style="font-size:14px;font-weight:500;text-decoration:none;color:#496A83;padding:13px 0 13px 18px;border-bottom:1px solid #EEF1F4;">{{ sb.label }}</a>
+          </sc-for>
+        </sc-if>
       </sc-for>
     </nav>
   </sc-if>
@@ -173,7 +189,7 @@ a:hover{color:#2F4A5E;}
   </section>
 </sc-if>
 
-<!-- ============ PRODUCTS LISTING ============ -->
+<!-- ============ PRODUCTS LANDING ============ -->
 <sc-if value="{{ isProducts }}" hint-placeholder-val="{{ false }}">
   <section data-screen-label="Products" style="background:#F3F6F8;">
     <div style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) clamp(28px,3.5vw,44px);display:flex;flex-direction:column;gap:18px;">
@@ -182,33 +198,181 @@ a:hover{color:#2F4A5E;}
       <p style="margin:0;font-size:17px;line-height:1.75;color:#6E6E77;max-width:none;">Medicines, medical devices and diagnostics sourced and registered for South Africa. Products are available to healthcare professionals; contact us to enquire or order.</p>
     </div>
   </section>
-  <section style="max-width:1240px;margin:0 auto;padding:clamp(28px,3.5vw,44px) clamp(20px,4vw,48px) clamp(40px,5vw,64px);display:flex;flex-direction:column;gap:28px;">
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:24px;">
-      <sc-for list="{{ visibleProducts }}" as="p" hint-placeholder-count="1">
-        <a href="{{ p.href }}" style="text-decoration:none;border:1px solid #E1E7EC;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;background:#FFFFFF;" style-hover="border-color:#496A83;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">
-          <div style="aspect-ratio:4/3;background:#FFFFFF;display:flex;align-items:center;justify-content:center;padding:24px;border-bottom:1px solid #EEF1F4;">
-            <img src="{{ p.img }}" alt="{{ p.name }}" style="max-width:100%;max-height:100%;object-fit:contain;display:block;">
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(28px,3.5vw,44px) clamp(20px,4vw,48px) clamp(40px,5vw,64px);">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:24px;">
+      <sc-for list="{{ productCats }}" as="c" hint-placeholder-count="2">
+        <a href="{{ c.href }}" style="text-decoration:none;border:1px solid #E1E7EC;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;background:#FFFFFF;" style-hover="border-color:#496A83;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">
+          <div style="aspect-ratio:16/10;background:#FFFFFF;display:flex;align-items:center;justify-content:center;padding:24px;border-bottom:1px solid #EEF1F4;">
+            <sc-if value="{{ c.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ c.img }}" alt="{{ c.name }}" style="max-width:min(100%,300px);max-height:min(100%,330px);object-fit:contain;display:block;"></sc-if>
+            <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ false }}"><div style="width:100%;height:100%;border:1.5px dashed #C9D3DB;border-radius:12px;background:#F7F9FA;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:12px;font-weight:600;letter-spacing:0.06em;color:#6E6E77;">{{ c.name }} photo</div></sc-if>
           </div>
-          <div style="padding:24px 26px 28px;display:flex;flex-direction:column;gap:12px;">
-            <span style="font-size:11px;font-weight:700;letter-spacing:0.16em;color:#4F7A3A;">{{ p.category }}</span>
-            <span style="font-size:20px;font-weight:700;color:#2F4A5E;">{{ p.name }}</span>
-            <span style="font-size:15px;line-height:1.6;color:#6E6E77;">{{ p.summary }}</span>
-            <span style="font-size:14px;font-weight:700;color:#496A83;padding-top:6px;">View product →</span>
+          <div style="padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.16em;color:#4F7A3A;">{{ c.countLabel }}</span>
+            <span style="font-size:22px;font-weight:700;color:#2F4A5E;">{{ c.name }}</span>
+            <span style="font-size:15px;line-height:1.6;color:#6E6E77;">{{ c.summary }}</span>
+            <span style="font-size:14px;font-weight:700;color:#496A83;padding-top:6px;">View category →</span>
           </div>
         </a>
       </sc-for>
     </div>
-    <sc-if value="{{ noProducts }}" hint-placeholder-val="{{ false }}">
-      <div style="border:1px dashed #C9D3DB;border-radius:20px;padding:48px 28px;text-align:center;font-size:15px;line-height:1.6;">No products in this category yet. <a href="#contact" style="color:#496A83;font-weight:600;">Contact us</a> about what you're looking for.</div>
+  </section>
+</sc-if>
+
+<!-- ============ PRODUCT CATEGORY ============ -->
+<sc-if value="{{ isCategory }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Category" style="background:#F3F6F8;">
+    <div style="max-width:1240px;margin:0 auto;padding:24px clamp(20px,4vw,48px) clamp(28px,3.5vw,44px);display:flex;flex-direction:column;gap:18px;">
+      <nav aria-label="Breadcrumb" style="display:flex;flex-wrap:wrap;gap:8px;font-size:13px;font-weight:500;">
+      <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="3">
+        <span style="display:flex;gap:8px;align-items:center;">
+          <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><a href="{{ c.href }}" style="color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;">{{ c.label }}</a><span aria-hidden="true" style="color:#9AA3AB;">›</span></sc-if>
+          <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="color:#2F4A5E;font-weight:600;">{{ c.label }}</span></sc-if>
+        </span>
+      </sc-for>
+    </nav>
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;padding-top:12px;">PRODUCTS</div>
+      <h1 style="margin:0;font-size:clamp(30px,3.8vw,46px);line-height:1.1;font-weight:700;color:#2F4A5E;">{{ cat.name }}</h1>
+      <sc-if value="{{ cat.intro }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:17px;line-height:1.75;color:#6E6E77;">{{ cat.intro }}</p></sc-if>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(28px,3.5vw,44px) clamp(20px,4vw,48px) clamp(16px,2vw,24px);display:flex;flex-direction:column;gap:clamp(32px,4vw,48px);">
+    <sc-for list="{{ cat.groups }}" as="g" hint-placeholder-count="2">
+      <div style="display:flex;flex-direction:column;gap:18px;">
+        <sc-if value="{{ g.heading }}" hint-placeholder-val="{{ true }}"><h2 style="margin:0;font-size:clamp(18px,1.8vw,22px);font-weight:700;letter-spacing:0.04em;color:#2F4A5E;padding-bottom:12px;border-bottom:1px solid #E6EBEF;">{{ g.heading }}</h2></sc-if>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:20px;">
+          <sc-for list="{{ g.items }}" as="p" hint-placeholder-count="3">
+          <a href="{{ p.href }}" style="text-decoration:none;border:1px solid #E1E7EC;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;background:#FFFFFF;" style-hover="border-color:#496A83;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">
+            <div style="aspect-ratio:4/3;background:#FFFFFF;display:flex;align-items:center;justify-content:center;padding:20px;border-bottom:1px solid #EEF1F4;">
+              <sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ p.img }}" alt="{{ p.name }}" style="max-width:min(100%,300px);max-height:min(100%,330px);object-fit:contain;display:block;"></sc-if>
+              <sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}"><div style="width:100%;height:100%;border:1.5px dashed #C9D3DB;border-radius:12px;background:#F7F9FA;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:12px;font-weight:600;letter-spacing:0.06em;color:#6E6E77;">{{ p.name }} photo</div></sc-if>
+            </div>
+            <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:8px;">
+              <span style="font-size:18px;font-weight:700;color:#2F4A5E;">{{ p.name }}</span>
+              <span style="font-size:14px;line-height:1.5;color:#6E6E77;">{{ p.type }}</span>
+              <span style="font-size:14px;font-weight:700;color:#496A83;padding-top:4px;">View product →</span>
+            </div>
+          </a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ cat.hasTable }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:18px;">
+        <h2 style="margin:0;font-size:clamp(18px,1.8vw,22px);font-weight:700;letter-spacing:0.04em;color:#2F4A5E;">At a glance</h2>
+        <div style="overflow-x:auto;border:1px solid #E1E7EC;border-radius:16px;background:#FFFFFF;">
+          <div role="table" aria-label="ECG models at a glance" style="min-width:620px;font-size:15px;line-height:1.5;">
+            <div role="row" style="display:grid;grid-template-columns:minmax(120px,1fr) minmax(170px,1.4fr) minmax(170px,1.4fr) 90px;align-items:center;background:#496A83;">
+              <span role="columnheader" style="padding:14px 20px;font-size:12px;font-weight:700;letter-spacing:0.14em;color:#FFFFFF;">MODEL</span>
+              <span role="columnheader" style="padding:14px 20px;font-size:12px;font-weight:700;letter-spacing:0.14em;color:#FFFFFF;">TYPE</span>
+              <span role="columnheader" style="padding:14px 20px;font-size:12px;font-weight:700;letter-spacing:0.14em;color:#FFFFFF;">DEFINING FEATURE</span>
+              <span role="columnheader" style="padding:14px 20px;font-size:12px;font-weight:700;letter-spacing:0.14em;color:#FFFFFF;"></span>
+            </div>
+            <sc-for list="{{ cat.table }}" as="r" hint-placeholder-count="8">
+              <div role="row" style="display:grid;grid-template-columns:minmax(120px,1fr) minmax(170px,1.4fr) minmax(170px,1.4fr) 90px;align-items:center;border-top:1px solid #EEF1F4;">
+                <span role="cell" style="padding:14px 20px;font-weight:700;"><a href="{{ r.href }}" style="color:#2F4A5E;text-decoration:none;" style-hover="color:#496A83;text-decoration:underline;">{{ r.name }}</a></span>
+                <span role="cell" style="padding:14px 20px;color:#4A4A52;">{{ r.type }}</span>
+                <span role="cell" style="padding:14px 20px;color:#4A4A52;">{{ r.feature }}</span>
+                <span role="cell" style="padding:14px 20px;text-align:right;"><a href="{{ r.href }}" aria-label="{{ r.aria }}" style="font-size:14px;font-weight:700;color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;">View →</a></span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
     </sc-if>
+  </section>
+</sc-if>
+
+<!-- ============ ECG PRODUCT PAGE ============ -->
+<sc-if value="{{ isEcgProduct }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="ECG Product" style="max-width:1240px;margin:0 auto;padding:24px clamp(20px,4vw,48px) 0;">
+    <nav aria-label="Breadcrumb" style="display:flex;flex-wrap:wrap;gap:8px;font-size:13px;font-weight:500;">
+      <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="3">
+        <span style="display:flex;gap:8px;align-items:center;">
+          <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><a href="{{ c.href }}" style="color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;">{{ c.label }}</a><span aria-hidden="true" style="color:#9AA3AB;">›</span></sc-if>
+          <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="color:#2F4A5E;font-weight:600;">{{ c.label }}</span></sc-if>
+        </span>
+      </sc-for>
+    </nav>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(28px,3.5vw,44px) clamp(20px,4vw,48px) clamp(36px,4.5vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(32px,5vw,64px);align-items:center;">
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">{{ ecg.eyebrow }}</div>
+      <h1 style="margin:0;font-size:clamp(26px,3vw,40px);line-height:1.15;font-weight:700;color:#2F4A5E;">{{ ecg.name }}</h1>
+      <p style="margin:0;font-size:17px;line-height:1.7;max-width:520px;text-wrap:pretty;"><strong style="font-weight:700;color:#2F4A5E;">{{ ecg.typeLabel }}</strong> • {{ ecg.tagline }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;">
+        <a href="{{ ecg.orderHref }}" style="font-size:14px;font-weight:700;text-decoration:none;background:#82AA69;color:#1C2B14;padding:16px 28px;border-radius:999px;" style-hover="background:#94BA7C;color:#1C2B14;" style-focus="outline:3px solid #496A83;outline-offset:3px;">Enquire / Order</a>
+        <a href="#ecg-specs" onClick="{{ goSpecs }}" style="font-size:14px;font-weight:600;text-decoration:none;border:1.5px solid #496A83;color:#496A83;padding:15px 28px;border-radius:999px;" style-hover="background:#F3F6F8;" style-focus="outline:3px solid #82AA69;outline-offset:3px;">Technical snapshot</a>
+      </div>
+    </div>
+    <figure style="margin:0;display:flex;flex-direction:column;gap:10px;">
+      <div style="aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;">
+        <sc-if value="{{ ecg.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ ecg.img }}" alt="{{ ecg.name }}" style="max-width:min(100%,300px);max-height:min(100%,330px);object-fit:contain;display:block;"></sc-if>
+        <sc-if value="{{ ecg.noImg }}" hint-placeholder-val="{{ false }}"><div style="width:100%;height:100%;border:1.5px dashed #C9D3DB;border-radius:20px;background:#F7F9FA;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:13px;font-weight:600;letter-spacing:0.06em;color:#6E6E77;">{{ ecg.name }} photo</div></sc-if>
+      </div>
+      <figcaption style="font-size:12px;color:#6E6E77;text-align:right;">{{ imageCredit }}</figcaption>
+    </figure>
+  </section>
+
+  <section style="background:#F3F6F8;">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(24px,4vw,64px);">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">PRODUCT OVERVIEW</div>
+      <p style="margin:0;font-size:17px;line-height:1.8;color:#4A4A52;text-wrap:pretty;">{{ ecg.overview }}</p>
+    </div>
+  </section>
+
+  <section id="ecg-specs" style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) 0;display:flex;flex-direction:column;gap:22px;">
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">TECHNICAL SNAPSHOT</div>
+      <h2 style="margin:0;font-size:clamp(22px,2.4vw,28px);font-weight:700;color:#2F4A5E;">Specifications</h2>
+    </div>
+    <div style="border:1px solid #E1E7EC;border-radius:16px;overflow:hidden;background:#FFFFFF;">
+      <sc-for list="{{ ecg.specs }}" as="r" hint-placeholder-count="6">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:4px 24px;padding:16px 22px;border-bottom:1px solid #EEF1F4;font-size:15px;line-height:1.6;">
+          <span style="font-weight:700;color:#2F4A5E;">{{ r.k }}</span>
+          <span style="color:{{ r.color }};font-style:{{ r.fs }};font-weight:{{ r.fw }};">{{ r.v }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(24px,4vw,48px);align-items:start;">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">HIGHLIGHTS</div>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;">
+        <sc-for list="{{ ecg.highlights }}" as="hl" hint-placeholder-count="4">
+          <li style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #EEF1F4;font-size:16px;line-height:1.55;color:#4A4A52;">
+            <span style="width:24px;height:24px;border-radius:50%;background:#EEF4EA;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4F7A3A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12.5 10 17 19 7"></polyline></svg></span><span>{{ hl }}</span>
+          </li>
+        </sc-for>
+      </ul>
+    </div>
+    <div style="background:#F3F6F8;border-radius:18px;padding:clamp(22px,3vw,30px);display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">SUITABLE FOR</div>
+      <p style="margin:0;font-size:16px;line-height:1.7;color:#2F4A5E;text-wrap:pretty;">{{ ecg.suitable }}</p>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) clamp(40px,5vw,64px);">
+    <div style="background:#496A83;border-radius:24px;padding:clamp(28px,4vw,48px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;">
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:620px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#D9E6CF;">AVAILABLE TO HEALTHCARE PROFESSIONALS</div>
+        <p style="margin:0;font-size:clamp(17px,1.7vw,20px);line-height:1.5;font-weight:500;color:#FFFFFF;text-wrap:pretty;">For product enquiries, further information or to place an order, please contact Imbue Healthcare.</p>
+      </div>
+      <a href="{{ ecg.orderHref }}" style="font-size:14px;font-weight:700;text-decoration:none;background:#82AA69;color:#1C2B14;padding:16px 30px;border-radius:999px;" style-hover="background:#94BA7C;color:#1C2B14;" style-focus="outline:3px solid #FFFFFF;outline-offset:3px;">Enquire / Order</a>
+    </div>
   </section>
 </sc-if>
 
 <!-- ============ SPIROMETER ============ -->
 <sc-if value="{{ isSpiro }}" hint-placeholder-val="{{ false }}">
   <section data-screen-label="Spirometer" style="max-width:1240px;margin:0 auto;padding:24px clamp(20px,4vw,48px) 0;">
-    <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;font-weight:500;">
-      <a href="#products" style="color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;">Products</a><span>/</span><span style="color:#2F4A5E;font-weight:600;">Lung Screening Spirometer</span>
+    <nav aria-label="Breadcrumb" style="display:flex;flex-wrap:wrap;gap:8px;font-size:13px;font-weight:500;">
+      <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="3">
+        <span style="display:flex;gap:8px;align-items:center;">
+          <sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><a href="{{ c.href }}" style="color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;">{{ c.label }}</a><span aria-hidden="true" style="color:#9AA3AB;">›</span></sc-if>
+          <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="color:#2F4A5E;font-weight:600;">{{ c.label }}</span></sc-if>
+        </span>
+      </sc-for>
     </nav>
   </section>
   <section style="max-width:1240px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(20px,4vw,48px) clamp(28px,3.5vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(32px,5vw,64px);align-items:center;">
@@ -504,6 +668,7 @@ a:hover{color:#2F4A5E;}
               <select value="{{ form.enquiry }}" onChange="{{ onEnquiry }}" onBlur="{{ blurEnquiry }}" aria-invalid="{{ err.enquiryBool }}" style="font-family:inherit;font-size:15px;color:#2A2A30;padding:10px 14px;border-radius:10px;border:1.5px solid {{ err.enquiryBorder }};background:#FFFFFF;outline:none;cursor:pointer;" style-focus="border-color:#496A83;box-shadow:0 0 0 4px rgba(73,106,131,0.18);">
                 <option value="">Select an option</option>
                 <option value="Spirometer Order">Spirometer Order</option>
+                <option value="ECG Equipment">ECG Equipment</option>
                 <option value="Product Information">Product Information</option>
                 <option value="Marketing">Marketing</option>
                 <option value="Sales">Sales</option>
@@ -512,8 +677,8 @@ a:hover{color:#2F4A5E;}
                 <option value="General Enquiry">General Enquiry</option>
               </select>
               <sc-if value="{{ err.enquiry }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;font-weight:500;color:#B42318;">{{ err.enquiry }}</span></sc-if>
-              <sc-if value="{{ isSpiroOrder }}" hint-placeholder-val="{{ false }}">
-                <span style="font-size:13px;line-height:1.5;font-weight:500;color:#496A83;display:flex;gap:8px;align-items:flex-start;"><span style="width:6px;height:6px;border-radius:50%;background:#496A83;margin-top:6px;flex-shrink:0;"></span>The Lung Screening Spirometer is available for purchase by healthcare professionals only.</span>
+              <sc-if value="{{ isHcpOrder }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:13px;line-height:1.5;font-weight:500;color:#496A83;display:flex;gap:8px;align-items:flex-start;"><span style="width:6px;height:6px;border-radius:50%;background:#496A83;margin-top:6px;flex-shrink:0;"></span>{{ hcpNote }}</span>
               </sc-if>
             </label>
 
@@ -524,7 +689,7 @@ a:hover{color:#2F4A5E;}
 
             <sc-if value="{{ hcpBlocked }}" hint-placeholder-val="{{ false }}">
               <div role="status" style="background:#F3F6F8;border:1px solid #D5DFE6;border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
-                <p style="margin:0;font-size:15px;line-height:1.65;color:#2F4A5E;">Spirometer orders are limited to healthcare professionals. You're welcome to send a Product Information or General Enquiry instead, and our team will be happy to help.</p>
+                <p style="margin:0;font-size:15px;line-height:1.65;color:#2F4A5E;">{{ blockedLabel }} are limited to healthcare professionals. You're welcome to send a Product Information or General Enquiry instead, and our team will be happy to help.</p>
                 <button type="button" onClick="{{ switchToInfo }}" style="align-self:flex-start;font-family:inherit;font-size:14px;font-weight:700;background:#FFFFFF;color:#496A83;border:1.5px solid #496A83;padding:8px 16px;border-radius:999px;cursor:pointer;min-height:44px;" style-hover="background:#E8EEF2;" style-focus="outline:3px solid #82AA69;outline-offset:2px;">Switch to Product Information</button>
               </div>
             </sc-if>
@@ -640,6 +805,77 @@ const PRODUCTS = [
 ];
 const CATEGORIES = ['All', 'Medicines', 'Medical devices', 'Diagnostics'];
 
+// ===== Product catalogue — add categories / products here =====
+const IMAGE_CREDIT = 'Image: RMS';
+// ECG photos: set each path once the supplied photo is uploaded (e.g. 'vesta-101.png'). Empty = labelled placeholder.
+const ECG_IMAGES = { 'vesta-101': 'vesta-101.png', 'vesta-301i': 'vesta-301i.png', 'vesta-302i': 'vesta-302i.png', 'vesta-305i': 'vesta-305i.jpg', 'vesta-12ec': 'vesta-12ec.jpg', 'vesta-12c': 'vesta-12c.jpg', 'vesta-121i': 'vesta-121i.png', 'ulterius-501': 'ulterius-501.png' };
+const ECG_PRODUCTS = [
+  { slug: 'vesta-101', name: 'RMS Vesta 101', short: 'Vesta 101', glanceType: 'Single-channel portable', glanceFeature: 'One-channel printout',
+    subtitle: 'Single-channel portable ECG • Simple, economical 12-lead ECG recording',
+    overview: 'A compact, mains- and battery-operated electrocardiograph for routine resting ECG examinations. The Vesta 101 records a standard 12-lead ECG and prints one channel at a time, with automatic and manual recording modes for day-to-day clinical use.',
+    specs: [['ECG recording', 'Single-channel printout; standard 12 leads'], ['Acquisition', 'Automatic and manual modes'], ['Measurements', 'Heart rate; RR, PR, QRS, QT/QTc intervals; electrical axes'], ['Patient memory', 'Last patient recording'], ['Printer / paper', 'Built-in thermal printer; 50 mm roll'], ['Power / weight', 'AC/DC battery operation; approximately 1.45 kg']],
+    highlights: 'One-touch operation for a full 12-lead ECG • Automatic baseline control to optimise printouts • Battery, charging and AC/DC status indicators • Paper-out indication and automatic ECG measurements',
+    suitable: 'GP practices, basic ECG screening, bedside examinations and mobile visits.' },
+  { slug: 'vesta-301i', name: 'RMS Vesta 301i', short: 'Vesta 301i', glanceType: 'Three-channel portable', glanceFeature: '3.5-inch display',
+    subtitle: 'Three-channel portable ECG • A practical, colour-screen 12-lead ECG system',
+    overview: 'The Vesta 301i combines simultaneous 12-lead acquisition with a three-channel thermal printer, a colour waveform preview and automated measurements and interpretation. Designed for routine clinical ECG workflows, it also offers optional pathways for computer-based reporting.',
+    specs: [['Lead acquisition / output', '12 leads acquired simultaneously; 3-channel paper output'], ['Screen', 'Up to 3.5-inch colour TFT display'], ['Patient memory', '[CONFIRM WITH RMS — 50 or 20 patients]'], ['Printer / paper', 'Built-in thermal printer; 80 mm roll'], ['ECG reporting', 'Measurements, interpretation and multiple print formats'], ['Optional functions', 'USB storage, direct A4 printout and PC connection']],
+    highlights: 'Full alphanumeric keypad for clinical and patient details • Real-time waveform preview and paper-out warning • Isolation protection against defibrillation • Optional storage and PC-based report workflow',
+    suitable: 'GPs, occupational-health clinics and private medical practices needing a three-channel ECG.' },
+  { slug: 'vesta-302i', name: 'RMS Vesta 302i', short: 'Vesta 302i', glanceType: 'Three-channel portable', glanceFeature: '30-patient memory',
+    subtitle: 'Three-channel portable ECG • Straightforward ECG acquisition with an LCD display',
+    overview: 'The Vesta 302i is a three-channel resting ECG instrument with simultaneous 12-lead acquisition, built-in thermal recording, automated measurements and interpretation, and a simple alphanumeric LCD interface.',
+    specs: [['Lead acquisition / output', 'Simultaneous 12-lead acquisition; 3-channel ECG'], ['Display', 'Alphanumeric LCD'], ['Storage', '30-patient internal memory'], ['ECG report', 'Automatic measurements, interpretation and print options'], ['Gain selections', '2.5, 5, 10 and 20'], ['Optional connectivity', 'PC and tele-ECG integration']],
+    highlights: 'Full alphanumeric keypad • Paper-out indication • Multiple printing options • Isolation protection against defibrillation',
+    suitable: 'Clinics preferring a straightforward three-channel instrument without a colour graphical screen.' },
+  { slug: 'vesta-305i', name: 'RMS Vesta 305i', short: 'Vesta 305i', glanceType: 'Three-channel portable', glanceFeature: '500-patient memory',
+    subtitle: 'Three-channel portable ECG • Expanded storage and digital report transfer',
+    overview: 'The Vesta 305i is an enhanced three-channel ECG system with 12-lead simultaneous acquisition, a 5.6-inch colour screen and internal storage for up to 500 patients. PDF export to a USB drive supports efficient digital sharing and record retention.',
+    specs: [['Lead acquisition / output', '12 leads simultaneously; 3-channel printing'], ['Screen', '5.6-inch graphical colour TFT'], ['Storage', 'Up to 500 patient ECG records'], ['Data transfer', 'PDF-format export to USB pen drive'], ['Analysis', 'Measurements, interpretation and 16 arrhythmia types'], ['Power', 'Mains and battery operation']],
+    highlights: 'Soft-touch QWERTY keypad for patient and clinic data • Rhythm leads, median complexes, axis and measurements • Three listed print layouts including 4×3 and 3×1 modes • Filtering of baseline wander and AC/EMG interference; defibrillation isolation',
+    suitable: 'Busier GP practices, occupational-health centres and multi-site clinics wanting USB/PDF reporting.' },
+  { slug: 'vesta-12ec', name: 'RMS Vesta 12EC', short: 'Vesta 12EC', glanceType: 'Twelve-channel portable', glanceFeature: '8-inch touchscreen',
+    subtitle: 'Twelve-channel portable ECG • Full 12-channel ECG with an 8-inch touchscreen',
+    overview: 'A portable 12-channel resting ECG system with an 8-inch colour touchscreen, on-screen 12-channel display and built-in full-width thermal printer. ECG measurements and interpretation can be reviewed directly on the device.',
+    specs: [['ECG display / output', '12-channel ECG with on-screen interpretation'], ['Screen', '8-inch colour TFT touchscreen'], ['Printer / paper', 'Integrated thermal printer; 210 mm roll'], ['Operation', 'Automatic and manual print modes'], ['Status indicators', 'Lead-off, paper-out, battery charging and AC/DC'], ['Input', 'Soft-touch keys plus virtual pop-up keyboard']],
+    highlights: 'Digital filtering for baseline drift and AC/EMG interference • Isolation protection against defibrillation • Portable housing with carrying handle • Direct on-device 12-channel ECG review and reporting',
+    suitable: 'Specialist rooms, emergency settings and practices wanting full-width 12-channel ECG reports.' },
+  { slug: 'vesta-12c', name: 'RMS Vesta 12C', short: 'Vesta 12C', glanceType: 'Twelve-channel portable', glanceFeature: '10.1-inch touchscreen',
+    subtitle: 'Twelve-channel portable ECG • Large-screen, full-width ECG acquisition and printing',
+    overview: 'The Vesta 12C delivers a large 10.1-inch colour touchscreen with on-screen 12-channel ECG visualisation and interpretation. Its integrated thermal printer and keyboard/USB support suit clinical environments with higher-volume reporting needs.',
+    specs: [['ECG display / output', '12-channel ECG with interpretation'], ['Screen', '10.1-inch high-resolution colour TFT touchscreen'], ['Printer / paper', 'Built-in 210 mm thermal recorder'], ['Recording modes', 'Automatic and manual printing'], ['USB peripherals', 'Supports keyboard, mouse and USB pen drive'], ['Safety / signal', 'Digital filters and defibrillation isolation']],
+    highlights: 'Large screen for reviewing ECG traces • Virtual keyboard for patient and clinical information • Portable design with integrated carry handle • On-device thermal report printing',
+    suitable: 'Cardiology-oriented GP practices, medical centres and specialists who value a larger ECG display.' },
+  { slug: 'vesta-121i', name: 'RMS Vesta 121i', short: 'Vesta 121i', glanceType: 'PC-based 12-channel', glanceFeature: 'PC reporting',
+    subtitle: 'PC-based 12-channel ECG • Computer-based acquisition, reporting and data management',
+    overview: 'The Vesta 121i is a PC-based electrocardiograph for simultaneous 12-lead ECG acquisition, automated measurements and interpretation. It provides software-driven record handling, conventional A4 reports and additional analysis options.',
+    specs: [['Recording', 'Simultaneous 12-lead ECG acquisition'], ['Workstation', 'PC-based software platform'], ['Analysis', 'Interpretation, lead-off alerts, enlarged medians and ST calculations'], ['Advanced reports', 'Heart rate variability (HRV) analysis'], ['Storage', 'Dependent on PC storage'], ['Output', 'Standard A4 printing, report email and patient cards']],
+    highlights: 'PC-based searchable record and analysis workflow • Economical report output on standard A4 paper • Suitable for sharing ECG reports electronically',
+    suitable: 'Consulting rooms and specialist practices already using a desktop/laptop workflow.' },
+  { slug: 'ulterius-501', name: 'RMS Ulterius 501', short: 'Ulterius 501', glanceType: 'Remote / tele-ECG', glanceFeature: 'Remote transmission',
+    subtitle: 'Remote / tele-ECG system • ECG recording with remote transmission and consultation',
+    overview: 'The Ulterius 501 is an RMS tele-ECG platform described as supporting remote access, two-way transmission and longitudinal patient histories. It was designed to help clinicians share ECG recordings between remote locations and reporting specialists.',
+    specs: [['Clinical workflow', 'Tele-ECG with bidirectional report transmission'], ['Data link', '[CONFIRM CURRENT CONNECTIVITY WITH RMS]'], ['Patient data', 'Remote access to records and patient history'], ['Notifications', 'SMS notification and one-touch data upload'], ['Remote reporting', 'Download of specialist ECG reports'], ['Optional parameters', 'SpO2, NIBP and body temperature']],
+    highlights: 'Remote ECG capture and specialist consultation workflow • Supports multiple collection and review sites • Optional wider vital-sign acquisition',
+    suitable: 'Remote screening and outreach services.' },
+];
+const ECG_BY_SLUG = Object.fromEntries(ECG_PRODUCTS.map(p => [p.slug, p]));
+const SPIRO_ITEM = { name: 'Lung Screening Spirometer', type: 'Medical device · Diagnostics', img: 'spirometer-device.png', href: '#products/spirometer' };
+const ecgItem = slug => { const p = ECG_BY_SLUG[slug]; return { name: p.name, type: p.subtitle.split(' • ')[0], img: ECG_IMAGES[slug] || '', href: '#products/ecg/' + slug }; };
+const PRODUCT_CATEGORIES = [
+  { slug: 'respiratory', name: 'Respiratory Diagnostics', intro: '', summary: 'Lung Screening Spirometer', groups: [{ heading: '', items: [SPIRO_ITEM] }] },
+  { slug: 'ecg', name: 'Cardiology – ECG', intro: 'Electrocardiographs from Recorders & Medicare Systems (RMS).', summary: 'Electrocardiographs from Recorders & Medicare Systems (RMS).', hasTable: true,
+    groups: [
+      { heading: 'Single-channel portable ECG', items: ['vesta-101'].map(ecgItem) },
+      { heading: 'Three-channel portable ECG', items: ['vesta-301i', 'vesta-302i', 'vesta-305i'].map(ecgItem) },
+      { heading: 'Twelve-channel portable ECG', items: ['vesta-12ec', 'vesta-12c'].map(ecgItem) },
+      { heading: 'PC-based and tele-ECG', items: ['vesta-121i', 'ulterius-501'].map(ecgItem) },
+    ] },
+];
+const CAT_BY_SLUG = Object.fromEntries(PRODUCT_CATEGORIES.map(c => [c.slug, c]));
+const ORDER_ENQUIRIES = ['Spirometer Order', 'ECG Equipment'];
+const withImg = o => ({ ...o, hasImg: !!o.img, noImg: !o.img });
+
 const FEATURES = ['Ergonomic handset for precise airflow control', 'Digital turbine with detachable, easy-to-disinfect transducer', 'Auto and manual manoeuvre selection', 'Supports FVC, SVC and MVV tests', 'Includes predicted equations and ethnic corrections', 'Calculates lung age', 'Displays Flow-Volume and Volume-Time graphs', 'Supports pre- and post-bronchodilation testing', 'Tracks trends over time', "Allows doctor's notes", 'Provides auto-interpretation', 'Customised print options for single or all curves'];
 
 const PH = '[Placeholder – not specified in pamphlet]';
@@ -707,13 +943,19 @@ class Component extends DCLogic {
   applyHash(scroll) {
     const raw = (window.location.hash || '#home').slice(1);
     if (raw === 'spiro-tech') return;
-    const [page, sub] = raw.split('/');
+    const [page, sub, third] = raw.split('/');
     const patch0 = {};
     let route = ['home', 'about', 'products', 'services', 'contact'].includes(page) ? page : 'home';
     if (page === 'products' && sub === 'spirometer') route = 'spirometer';
+    else if (page === 'products' && sub === 'ecg' && third && ECG_BY_SLUG[third]) { route = 'ecgProduct'; patch0.prodSlug = third; }
+    else if (page === 'products' && sub && CAT_BY_SLUG[sub]) { route = 'category'; patch0.catSlug = sub; }
     const patch = { route, menuOpen: false, ...patch0 };
     if (route === 'contact' && sub === 'spirometer-order') {
       patch.form = { ...this.state.form, enquiry: 'Spirometer Order' }; patch.status = 'idle';
+    }
+    if (route === 'contact' && sub === 'ecg-order') {
+      const p = ECG_BY_SLUG[third];
+      patch.form = { ...this.state.form, enquiry: 'ECG Equipment', message: p ? 'Model: ' + p.name : this.state.form.message }; patch.status = 'idle';
     }
     this.setState(patch);
     if (scroll) window.scrollTo(0, 0);
@@ -736,14 +978,14 @@ class Component extends DCLogic {
   routing() {
     return { orders: this.props.ordersEmail || FORM_ROUTING.orders, info: this.props.infoEmail || FORM_ROUTING.info };
   }
-  destinationFor(enquiry) { const r = this.routing(); return enquiry === 'Spirometer Order' ? r.orders : r.info; }
+  destinationFor(enquiry) { const r = this.routing(); return ORDER_ENQUIRIES.includes(enquiry) ? r.orders : r.info; }
 
   submit(ev) {
     ev.preventDefault();
     const f = this.state.form;
     const errs = this.validate(f);
     this.setState({ submitted: true });
-    if (Object.keys(errs).length || (f.enquiry === 'Spirometer Order' && f.hcp === 'No')) return;
+    if (Object.keys(errs).length || (ORDER_ENQUIRIES.includes(f.enquiry) && f.hcp === 'No')) return;
     const to = this.destinationFor(f.enquiry);
     const subject = FORM_ROUTING.subjectPrefix + f.enquiry;
     this.setState({ status: 'sending' });
@@ -758,10 +1000,19 @@ class Component extends DCLogic {
     const { route, w, form: f, touched, submitted, status } = this.state;
     const isMobile = w < 960;
     const nav = [['HOME', 'home'], ['ABOUT US', 'about'], ['PRODUCTS', 'products'], ['SERVICES', 'services'], ['CONTACT US', 'contact']];
-    const activeKey = route === 'spirometer' ? 'products' : route === 'article' ? 'blog' : route;
-    const navItems = nav.map(([label, key]) => key === 'contact'
-      ? { label, href: '#contact', color: '#1C2B14', bg: key === activeKey ? '#6F9858' : '#82AA69', pad: '12px 22px', radius: '999px', line: 'transparent' }
-      : { label, href: '#' + key, color: key === activeKey ? '#496A83' : '#4A4A52', bg: 'transparent', pad: '8px 0', radius: '0', line: key === activeKey ? '#82AA69' : 'transparent' });
+    const activeKey = ['spirometer', 'category', 'ecgProduct'].includes(route) ? 'products' : route;
+    const prodSub = PRODUCT_CATEGORIES.map(c => { const n = c.groups.reduce((a, g) => a + g.items.length, 0); return { label: c.name, href: '#products/' + c.slug, count: n + (n === 1 ? ' product' : ' products') }; });
+    const noop = () => {};
+    const navItems = nav.map(([label, key]) => {
+      const base = key === 'contact'
+        ? { label, href: '#contact', color: '#1C2B14', bg: key === activeKey ? '#6F9858' : '#82AA69', pad: '12px 22px', radius: '999px', line: 'transparent' }
+        : { label, href: '#' + key, color: key === activeKey ? '#496A83' : '#4A4A52', bg: 'transparent', pad: '8px 0', radius: '0', line: key === activeKey ? '#82AA69' : 'transparent' };
+      const hasSub = key === 'products';
+      return { ...base, hasSub, sub: hasSub ? prodSub : [], showDrop: hasSub && !!this.state.dropOpen,
+        open: hasSub ? () => this.setState({ dropOpen: true }) : noop,
+        close: hasSub ? () => this.setState({ dropOpen: false }) : noop,
+        blur: hasSub ? e => { if (!e.currentTarget.contains(e.relatedTarget)) this.setState({ dropOpen: false }); } : noop };
+    });
 
     const setField = k => e => { const v = e.target.value; this.setState(s => ({ form: { ...s.form, [k]: v }, status: s.status === 'error' ? 'idle' : s.status })); };
     const blur = k => () => this.setState(s => ({ touched: { ...s.touched, [k]: true } }));
@@ -771,8 +1022,11 @@ class Component extends DCLogic {
     ['name', 'email', 'phone', 'hcp', 'enquiry'].forEach(k => { const m = show(k); err[k] = m || ''; err[k + 'Bool'] = !!m; err[k + 'Border'] = m ? '#D92D20' : '#CFD8DF'; });
     const hasErrors = submitted && Object.keys(allErr).length > 0;
 
-    const isSpiroOrder = f.enquiry === 'Spirometer Order';
-    const hcpBlocked = isSpiroOrder && f.hcp === 'No';
+    const isHcpOrder = ORDER_ENQUIRIES.includes(f.enquiry);
+    const isEcgOrder = f.enquiry === 'ECG Equipment';
+    const hcpNote = isEcgOrder ? 'ECG equipment is available for purchase by healthcare professionals only.' : 'The Lung Screening Spirometer is available for purchase by healthcare professionals only.';
+    const blockedLabel = isEcgOrder ? 'ECG equipment orders' : 'Spirometer orders';
+    const hcpBlocked = isHcpOrder && f.hcp === 'No';
     const isSending = status === 'sending';
     const submitDisabled = hcpBlocked || isSending;
     const btn = hcpBlocked ? { bg: '#E4E7EA', color: '#6E6E77', cursor: 'not-allowed', label: 'SEND ENQUIRY' }
@@ -799,6 +1053,7 @@ class Component extends DCLogic {
       home: ['Looking for a healthcare product or specialist industry support?', 'Get in Touch →'],
       about: ['Looking for a healthcare product or specialist industry support?', 'Get in Touch →'],
       products: ['Looking for a specific medicine, device or diagnostic?', 'Get in Touch →'],
+      category: ['Looking for a specific medicine, device or diagnostic?', 'Get in Touch →'],
       services: ['Looking for support in the pharmaceutical or medical-device sector?', 'Talk to Imbue →'],
       blog: ['Looking for a healthcare product or specialist industry support?', 'Get in Touch →'],
     };
@@ -811,6 +1066,22 @@ class Component extends DCLogic {
       isHome: route === 'home', isAbout: route === 'about', isProducts: route === 'products', isSpiro: route === 'spirometer', isServices: route === 'services', isContact: route === 'contact', isBlog: route === 'blog', isArticle: route === 'article',
       posts: POSTS.map(p => ({ ...p, href: '#blog/' + p.slug, titleCaps: p.title.toUpperCase() })),
       post: (() => { const p = POSTS.find(x => x.slug === this.state.slug) || POSTS[0]; return { ...p, blocks: p.blocks.map(([t, text]) => ({ text, isLead: t === 'lead', isP: t === 'p', isH2: t === 'h2', isQ: t === 'q' })) }; })(),
+      isCategory: route === 'category', isEcgProduct: route === 'ecgProduct', imageCredit: IMAGE_CREDIT,
+      closeDrop: () => this.setState({ dropOpen: false }),
+      productCats: PRODUCT_CATEGORIES.map(c => { const n = c.groups.reduce((a, g) => a + g.items.length, 0); const first = c.groups[0].items.find(i => i.img); return withImg({ name: c.name, href: '#products/' + c.slug, summary: c.summary, countLabel: (n + (n === 1 ? ' PRODUCT' : ' PRODUCTS')), img: first ? first.img : '' }); }),
+      cat: (() => { const c = CAT_BY_SLUG[this.state.catSlug] || PRODUCT_CATEGORIES[0]; return { name: c.name, intro: c.intro, hasTable: !!c.hasTable,
+        groups: c.groups.map(g => ({ heading: g.heading, items: g.items.map(withImg) })),
+        table: c.hasTable ? ECG_PRODUCTS.map(p => ({ name: p.short, type: p.glanceType, feature: p.glanceFeature, href: '#products/ecg/' + p.slug, aria: 'View ' + p.name })) : [] }; })(),
+      ecg: (() => { const p = ECG_BY_SLUG[this.state.prodSlug] || ECG_PRODUCTS[0]; const [typeLabel, tagline] = p.subtitle.split(' • ');
+        return withImg({ name: p.name, typeLabel, tagline, eyebrow: 'CARDIOLOGY – ECG', overview: p.overview, suitable: p.suitable, img: ECG_IMAGES[p.slug] || '',
+          orderHref: '#contact/ecg-order/' + p.slug, highlights: p.highlights.split(' • '),
+          specs: p.specs.map(([k, v]) => { const ph = v.startsWith('['); return { k, v, color: ph ? '#8A5A00' : '#4A4A52', fs: ph ? 'italic' : 'normal', fw: ph ? '600' : '400' }; }) }); })(),
+      crumbs: (() => { const L = (label, href) => ({ label, href, isLink: true, isCurrent: false }); const C = label => ({ label, href: '', isLink: false, isCurrent: true });
+        if (route === 'category') { const c = CAT_BY_SLUG[this.state.catSlug] || PRODUCT_CATEGORIES[0]; return [L('Products', '#products'), C(c.name)]; }
+        if (route === 'spirometer') return [L('Products', '#products'), L('Respiratory Diagnostics', '#products/respiratory'), C('Lung Screening Spirometer')];
+        if (route === 'ecgProduct') { const p = ECG_BY_SLUG[this.state.prodSlug] || ECG_PRODUCTS[0]; return [L('Products', '#products'), L('Cardiology – ECG', '#products/ecg'), C(p.name)]; }
+        return []; })(),
+      goSpecs: e => { e.preventDefault(); this.scrollToId('ecg-specs'); },
       services, categories, visibleProducts, noProducts: visibleProducts.length === 0,
       benefits: [{ label: 'COST EFFECTIVE', icon: ICONS.cost(26) }, { label: 'EASY TO USE', icon: ICONS.easy(26) }, { label: 'PORTABLE', icon: ICONS.portable(26) }],
       features: FEATURES, accordions,
@@ -818,7 +1089,7 @@ class Component extends DCLogic {
       swTabs: [['program', 'The program'], ['easy', 'How easy it is to use']].map(([k, label]) => { const on = (this.state.swTab || 'program') === k; return { label, bg: on ? '#496A83' : '#FFFFFF', color: on ? '#FFFFFF' : '#496A83', border: on ? '#496A83' : '#C9D6DF', onClick: () => this.setState({ swTab: k }) }; }),
       goTech: e => { e.preventDefault(); this.scrollToId('spiro-tech'); },
       showCtaBand: !!cta, ctaText: cta ? cta[0] : '', ctaButton: cta ? cta[1] : '',
-      form: f, err, hasErrors, hcpOptions, isSpiroOrder, hcpBlocked, isSending, submitDisabled, btn,
+      form: f, err, hasErrors, hcpOptions, isHcpOrder, hcpNote, blockedLabel, hcpBlocked, isSending, submitDisabled, btn,
       isSuccess: status === 'success', showForm: status !== 'success', isError: status === 'error',
       routeTo: f.enquiry ? this.destinationFor(f.enquiry) : this.routing().info,
       sentTo: this.state.sentTo, sentSubject: this.state.sentSubject,
