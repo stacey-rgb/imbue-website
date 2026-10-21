@@ -30,7 +30,7 @@ a:hover{color:#2F4A5E;}
     <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
       <nav aria-label="Main" style="display:flex;align-items:center;gap:32px;">
         <div style="display:flex;align-items:center;gap:28px;">
-          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
             <div onMouseEnter="{{ n.open }}" onMouseLeave="{{ n.close }}" onFocus="{{ n.open }}" onBlur="{{ n.blur }}" style="position:relative;display:flex;align-items:center;">
               <a href="{{ n.href }}" aria-haspopup="{{ n.hasSub }}" aria-expanded="{{ n.showDrop }}" style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-decoration:none;color:{{ n.color }};background:{{ n.bg }};padding:{{ n.pad }};border-radius:{{ n.radius }};border-bottom:2px solid {{ n.line }};outline:none;display:flex;align-items:center;gap:6px;" style-hover="opacity:0.85;" style-focus="outline:none;">{{ n.label }}<sc-if value="{{ n.hasSub }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="font-size:9px;">▼</span></sc-if></a>
               <sc-if value="{{ n.showDrop }}" hint-placeholder-val="{{ false }}">
@@ -367,6 +367,27 @@ a:hover{color:#2F4A5E;}
       <a href="{{ ecg.orderHref }}" style="font-size:14px;font-weight:700;text-decoration:none;background:#82AA69;color:#1C2B14;padding:16px 30px;border-radius:999px;" style-hover="background:#94BA7C;color:#1C2B14;" style-focus="outline:3px solid #FFFFFF;outline-offset:3px;">Enquire / Order</a>
     </div>
   </section>
+  <section style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 40px;">
+    <div style="padding-top:24px;border-top:1px solid #E6EBEF;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:24px 40px;font-size:13px;line-height:1.65;color:#4A4A52;">
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#496A83;">DEVICE</span>
+        <span style="font-weight:600;color:#2F4A5E;">{{ ecg.name }}</span>
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#496A83;padding-top:8px;">MANUFACTURED BY</span>
+        <span>Recorders &amp; Medicare Systems (P) Ltd. Plot No. 11, HSIIDC IT Park, Sector 22Panchkula – 134114, Haryana, India</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#496A83;">SAHPRA APPLICANT</span>
+        <span style="font-weight:700;color:#2F4A5E;">MNANDI PHARMA</span>
+        <span>62 Constantia Ave, Mnandi AH, Centurion, 0157</span>
+        <span><a href="tel:+27792496631" style="color:#496A83;" style-hover="color:#2F4A5E;">+27 79 249 6631</a> | <a href="mailto:info@mnandipharma.com" style="color:#496A83;" style-hover="color:#2F4A5E;">info@mnandipharma.com</a></span>
+        <a href="https://mnandipharma.com" target="_blank" rel="noopener" style="color:#496A83;" style-hover="color:#2F4A5E;">mnandipharma.com</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.16em;color:#496A83;">QUALITY &amp; COMPLIANCE</span>
+        <span>Manufactured under a quality management system certified to ISO 13485:2016 and ISO 9001:2015.</span>
+      </div>
+    </div>
+  </section>
 </sc-if>
 
 <!-- ============ SPIROMETER ============ -->
@@ -390,6 +411,7 @@ a:hover{color:#2F4A5E;}
         <a href="#contact/spirometer-order" style="font-size:14px;font-weight:700;text-decoration:none;background:#82AA69;color:#1C2B14;padding:16px 28px;border-radius:999px;" style-hover="background:#94BA7C;color:#1C2B14;" style-focus="outline:3px solid #496A83;outline-offset:3px;">Enquire / Order</a>
         <a href="#spiro-tech" onClick="{{ goTech }}" style="font-size:14px;font-weight:600;text-decoration:none;border:1.5px solid #496A83;color:#496A83;padding:15px 28px;border-radius:999px;" style-hover="background:#F3F6F8;" style-focus="outline:3px solid #82AA69;outline-offset:3px;">Technical information</a>
       </div>
+      <a href="#support/spirometer" style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#496A83;text-decoration:none;" style-hover="text-decoration:underline;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#496A83" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M10 8.5v7l5.5-3.5z"></path></svg>Watch how-to tutorials</a>
     </div>
     <div style="display:flex;align-items:center;justify-content:center;">
       <img src="spirometer-device.png" alt="Spirometer handset with USB cable" style="width:100%;max-width:600px;height:auto;display:block;">
@@ -589,6 +611,45 @@ a:hover{color:#2F4A5E;}
   </section>
 </sc-if>
 
+<!-- ============ SUPPORT / TUTORIALS ============ -->
+<sc-if value="{{ isSupport }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Support" style="background:#F3F6F8;">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,48px) clamp(28px,3.5vw,44px);display:flex;flex-direction:column;gap:18px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#4F7A3A;">SUPPORT</div>
+      <h1 style="margin:0;font-size:clamp(34px,4.4vw,54px);line-height:1.1;font-weight:700;color:#2F4A5E;">Tutorials</h1>
+      <p style="margin:0;font-size:17px;line-height:1.75;color:#6E6E77;max-width:760px;text-wrap:pretty;">Short videos showing how to set up and use your Imbue devices and their software.</p>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(8px,1.5vw,16px) clamp(20px,4vw,48px) clamp(16px,2vw,24px);display:flex;flex-direction:column;">
+    <sc-for list="{{ tutGroups }}" as="g" hint-placeholder-count="1">
+      <div style="display:flex;flex-direction:column;gap:20px;padding:clamp(24px,3vw,36px) 0;border-bottom:1px solid #E6EBEF;">
+        <button type="button" onClick="{{ g.toggle }}" aria-expanded="{{ g.isOpen }}" style="align-self:flex-start;display:flex;align-items:center;gap:12px;font-family:inherit;font-size:15px;font-weight:700;letter-spacing:0.08em;color:#FFFFFF;background:#496A83;border:0;padding:16px 28px;border-radius:999px;cursor:pointer;" style-hover="background:#3D5A70;" style-focus="outline:3px solid #82AA69;outline-offset:3px;">{{ g.label }}<span style="font-size:13px;">{{ g.chevron }}</span></button>
+        <sc-if value="{{ g.isOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px;">
+          <sc-for list="{{ g.videos }}" as="v" hint-placeholder-count="0">
+            <article style="display:flex;flex-direction:column;gap:12px;background:#FFFFFF;border:1px solid #E6EBEF;border-radius:14px;overflow:hidden;">
+              <div style="aspect-ratio:16/9;background:#EEF2F5;position:relative;">
+                <sc-if value="{{ v.isYoutube }}" hint-placeholder-val="{{ false }}">
+                  <iframe src="{{ v.embed }}" title="{{ v.title }}" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+                </sc-if>
+                <sc-if value="{{ v.isFile }}" hint-placeholder-val="{{ false }}">
+                  <video src="{{ v.src }}" controls="true" preload="metadata" playsInline="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;"></video>
+                </sc-if>
+              </div>
+              <div style="padding:4px 18px 18px;display:flex;flex-direction:column;gap:6px;">
+                <h3 style="margin:0;font-size:16px;line-height:1.4;font-weight:700;color:#2F4A5E;">{{ v.title }}</h3>
+                <p style="margin:0;font-size:14px;line-height:1.6;color:#6E6E77;">{{ v.desc }}</p>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+    </sc-for>
+    <p style="margin:0;padding:24px 0 8px;font-size:15px;line-height:1.7;color:#4A4A52;">Can’t find what you need? <a href="#contact" style="color:#496A83;font-weight:600;" style-hover="color:#2F4A5E;">Contact us</a> and our team will help.</p>
+  </section>
+</sc-if>
+
 <!-- ============ CONTACT ============ -->
 <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
   <section data-screen-label="Contact" style="background:#F3F6F8;">
@@ -745,6 +806,7 @@ a:hover{color:#2F4A5E;}
         <a href="#products" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">Products</a>
         <a href="#services" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">Services</a>
         <a href="#about" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">About Us</a>
+        <a href="#support" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">Support</a>
         <a href="#contact" style="color:#FFFFFF;text-decoration:none;font-size:15px;" style-hover="text-decoration:underline;color:#FFFFFF;">Contact</a>
       </nav>
       <div style="display:flex;flex-direction:column;gap:12px;">
@@ -882,8 +944,12 @@ const CAT_BY_SLUG = Object.fromEntries(PRODUCT_CATEGORIES.map(c => [c.slug, c]))
 const ORDER_ENQUIRIES = ['Spirometer Order', 'ECG Equipment'];
 const withImg = o => ({ ...o, hasImg: !!o.img, noImg: !o.img, bgImg: o.img ? 'url("' + o.img + '")' : 'none' });
 
-const FEATURES = ['Ergonomic handset for precise airflow control', 'Digital turbine with detachable, easy-to-disinfect transducer', 'Auto and manual manoeuvre selection', 'Supports FVC, SVC and MVV tests', 'Includes predicted equations and ethnic corrections', 'Calculates lung age', 'Displays Flow-Volume and Volume-Time graphs', 'Supports pre- and post-bronchodilation testing', 'Tracks trends over time', "Allows doctor's notes", 'Provides auto-interpretation', 'Customised print options for single or all curves'];
+const FEATURES = ['Supports FVC, SVC and MVV tests', 'Supports pre- and post-bronchodilation testing', 'Reusable, easy-to-disinfect mouthpiece'];
 
+const TUTORIALS = [
+  { slug: 'spirometer', device: 'Spirometer', productHref: '#products/spirometer', videos: [] },
+];
+const ytId = u => { const m = (u || '').match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/); return m ? m[1] : ''; };
 const PH = '[Placeholder – not specified in pamphlet]';
 const ACCORDIONS = [
   { title: 'Technical Specifications', groups: [{ heading: 'GENERAL', rows: [['Communication Interface', 'USB'], ['Power Supply', 'USB powered'], ['Weight', 'Approx. 120 gms, handset only'], ['Dimensions', '150 mm x 35 mm x 25 mm']] },
@@ -951,10 +1017,11 @@ class Component extends DCLogic {
     if (raw === 'spiro-tech') return;
     const [page, sub, third] = raw.split('/');
     const patch0 = {};
-    let route = ['home', 'about', 'products', 'services', 'contact'].includes(page) ? page : 'home';
+    let route = ['home', 'about', 'products', 'services', 'contact', 'support'].includes(page) ? page : 'home';
     if (page === 'products' && sub === 'spirometer') route = 'spirometer';
     else if (page === 'products' && sub === 'ecg' && third && ECG_BY_SLUG[third]) { route = 'ecgProduct'; patch0.prodSlug = third; }
     else if (page === 'products' && sub && CAT_BY_SLUG[sub]) { route = 'category'; patch0.catSlug = sub; }
+    if (route === 'support') { patch0.tutSlug = 'all'; if (TUTORIALS.some(t => t.slug === sub)) patch0.tutOpen = { ...(this.state.tutOpen || {}), [sub]: true }; }
     const patch = { route, menuOpen: false, ...patch0 };
     if (route === 'contact' && sub === 'spirometer-order') {
       patch.form = { ...this.state.form, enquiry: 'Spirometer Order' }; patch.status = 'idle';
@@ -1005,7 +1072,7 @@ class Component extends DCLogic {
   renderVals() {
     const { route, w, form: f, touched, submitted, status } = this.state;
     const isMobile = w < 960;
-    const nav = [['HOME', 'home'], ['ABOUT US', 'about'], ['PRODUCTS', 'products'], ['SERVICES', 'services'], ['CONTACT US', 'contact']];
+    const nav = [['HOME', 'home'], ['ABOUT US', 'about'], ['PRODUCTS', 'products'], ['SERVICES', 'services'], ['SUPPORT', 'support'], ['CONTACT US', 'contact']];
     const activeKey = ['spirometer', 'category', 'ecgProduct'].includes(route) ? 'products' : route;
     const prodSub = PRODUCT_CATEGORIES.map(c => { const n = c.groups.reduce((a, g) => a + g.items.length, 0); return { label: c.name, href: '#products/' + c.slug, count: n + (n === 1 ? ' product' : ' products') }; });
     const noop = () => {};
@@ -1060,6 +1127,7 @@ class Component extends DCLogic {
       about: ['Looking for a healthcare product or specialist industry support?', 'Get in Touch →'],
       products: ['Looking for a specific medicine, device or diagnostic?', 'Get in Touch →'],
       category: ['Looking for a specific medicine, device or diagnostic?', 'Get in Touch →'],
+      support: ['Need help with your device?', 'Contact Us →'],
       services: ['Looking for support in the pharmaceutical or medical-device sector?', 'Talk to Imbue →'],
       blog: ['Looking for a healthcare product or specialist industry support?', 'Get in Touch →'],
     };
@@ -1069,7 +1137,9 @@ class Component extends DCLogic {
       isDesktop: !isMobile, isMobile, menuOpen: this.state.menuOpen, showMobileMenu: isMobile && this.state.menuOpen,
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })), closeMenu: () => this.setState({ menuOpen: false }),
       navItems,
-      isHome: route === 'home', isAbout: route === 'about', isProducts: route === 'products', isSpiro: route === 'spirometer', isServices: route === 'services', isContact: route === 'contact', isBlog: route === 'blog', isArticle: route === 'article',
+      isHome: route === 'home', isAbout: route === 'about', isProducts: route === 'products', isSpiro: route === 'spirometer', isServices: route === 'services', isContact: route === 'contact', isSupport: route === 'support',
+      tutTabs: [['ALL', 'all'], ...TUTORIALS.map(t => [t.device.toUpperCase(), t.slug])].map(([label, k]) => { const on = (this.state.tutSlug || 'all') === k; return { label, href: k === 'all' ? '#support' : '#support/' + k, color: on ? '#FFFFFF' : '#496A83', bg: on ? '#496A83' : '#FFFFFF', border: on ? '#496A83' : '#C9D6DF' }; }),
+      tutGroups: TUTORIALS.filter(t => (this.state.tutSlug || 'all') === 'all' || t.slug === this.state.tutSlug).map(t => ({ ...t, label: t.device.toUpperCase(), isOpen: !!(this.state.tutOpen || {})[t.slug], chevron: (this.state.tutOpen || {})[t.slug] ? '▲' : '▼', toggle: () => this.setState(st => ({ tutOpen: { ...(st.tutOpen || {}), [t.slug]: !(st.tutOpen || {})[t.slug] } })), videos: t.videos.map(v => { const id = ytId(v.src); return { ...v, isYoutube: !!id, embed: id ? 'https://www.youtube-nocookie.com/embed/' + id : '', isFile: !!v.src && !id, isEmpty: !v.src }; }) })), isBlog: route === 'blog', isArticle: route === 'article',
       posts: POSTS.map(p => ({ ...p, href: '#blog/' + p.slug, titleCaps: p.title.toUpperCase() })),
       post: (() => { const p = POSTS.find(x => x.slug === this.state.slug) || POSTS[0]; return { ...p, blocks: p.blocks.map(([t, text]) => ({ text, isLead: t === 'lead', isP: t === 'p', isH2: t === 'h2', isQ: t === 'q' })) }; })(),
       isCategory: route === 'category', isEcgProduct: route === 'ecgProduct', imageCredit: IMAGE_CREDIT,
