@@ -626,7 +626,7 @@ a:hover{color:#2F4A5E;}
         <button type="button" onClick="{{ g.toggle }}" aria-expanded="{{ g.isOpen }}" style="align-self:flex-start;display:flex;align-items:center;gap:12px;font-family:inherit;font-size:15px;font-weight:700;letter-spacing:0.08em;color:#FFFFFF;background:#496A83;border:0;padding:16px 28px;border-radius:999px;cursor:pointer;" style-hover="background:#3D5A70;" style-focus="outline:3px solid #82AA69;outline-offset:3px;">{{ g.label }}<span style="font-size:13px;">{{ g.chevron }}</span></button>
         <sc-if value="{{ g.isOpen }}" hint-placeholder-val="{{ false }}">
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px;">
-          <sc-for list="{{ g.videos }}" as="v" hint-placeholder-count="0">
+          <sc-for list="{{ g.videos }}" as="v" hint-placeholder-count="1">
             <article style="display:flex;flex-direction:column;gap:12px;background:#FFFFFF;border:1px solid #E6EBEF;border-radius:14px;overflow:hidden;">
               <div style="aspect-ratio:16/9;background:#EEF2F5;position:relative;">
                 <sc-if value="{{ v.isYoutube }}" hint-placeholder-val="{{ false }}">
@@ -947,7 +947,9 @@ const withImg = o => ({ ...o, hasImg: !!o.img, noImg: !o.img, bgImg: o.img ? 'ur
 const FEATURES = ['Supports FVC, SVC and MVV tests', 'Supports pre- and post-bronchodilation testing', 'Reusable, easy-to-disinfect mouthpiece'];
 
 const TUTORIALS = [
-  { slug: 'spirometer', device: 'Spirometer', productHref: '#products/spirometer', videos: [] },
+  { slug: 'spirometer', device: 'Spirometer', productHref: '#products/spirometer', videos: [
+    { title: 'Downloading a report', desc: 'How to download a patient report from the spirometer software.', src: 'spirometer-downloading-report.mp4' },
+  ] },
 ];
 const ytId = u => { const m = (u || '').match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/); return m ? m[1] : ''; };
 const PH = '[Placeholder – not specified in pamphlet]';
